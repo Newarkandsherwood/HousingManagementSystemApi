@@ -45,8 +45,8 @@ namespace HousingManagementSystemApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HousingManagementSystemApi", Version = "v1" });
             });
 
-            services.AddHealthChecks()
-                .AddSqlServer(connectionString, name: "Universal Housing database");
+            services.AddHealthChecks();
+            // .AddSqlServer(connectionString, name: "Universal Housing database");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
