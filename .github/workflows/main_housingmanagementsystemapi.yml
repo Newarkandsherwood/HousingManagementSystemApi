@@ -101,5 +101,5 @@ jobs:
         with:
           app-name: 'HousingManagementSystemApi'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_26AD7F4AC40945DE9C030E61F603DD5B }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_PRODUCTION }}
           package: .
