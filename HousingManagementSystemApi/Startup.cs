@@ -33,12 +33,13 @@ namespace HousingManagementSystemApi
             services.AddControllers();
             services.AddTransient<IRetrieveAddressesUseCase, RetrieveAddressesUseCase>();
 
-            var connectionString = GetEnvironmentVariable("UNIVERSAL_HOUSING_CONNECTION_STRING");
-            services.AddTransient<IAddressesRepository, UniversalHousingAddressesRepository>(_ =>
-                new UniversalHousingAddressesRepository(() => new SqlConnection(connectionString)));
+            // var connectionString = GetEnvironmentVariable("UNIVERSAL_HOUSING_CONNECTION_STRING");
+            // services.AddTransient<IAddressesRepository, UniversalHousingAddressesRepository>(_ =>
+            //     new UniversalHousingAddressesRepository(() => new SqlConnection(connectionString)));
 
             services.AddHttpClient();
-            services.AddTransient<IAddressesGateway, AddressesDatabaseGateway>();
+            // services.AddTransient<IAddressesGateway, AddressesDatabaseGateway>();
+            services.AddTransient<IAddressesGateway, DummyAddressesGateway>();
 
             services.AddSwaggerGen(c =>
             {
