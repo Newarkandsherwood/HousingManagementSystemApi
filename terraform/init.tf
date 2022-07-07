@@ -1,14 +1,14 @@
 terraform {
-    required_providers {
-        azurerm = {
-            source  = "hashicorp/azurerm"
-            version = "=3.10.0"
-        }
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.10.0"
     }
-    backend "azurerm" {}
+  }
+  backend "azurerm" {}
 }
 
 provider "azurerm" {
-    features {}
-    skip_provider_registration = true
+  features {}
+  skip_provider_registration = true
 }
