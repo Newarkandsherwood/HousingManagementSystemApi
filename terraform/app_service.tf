@@ -13,6 +13,11 @@ resource "azurerm_windows_web_app_slot" "hro-management-api-staging-slot" {
         JWT_SECRET                = var.jwt_secret_staging
         SENTRY_DSN                = var.sentry_dsn
     }
+
+    auth_settings {
+        enabled = false
+    }
+
     site_config {}
 }
 
