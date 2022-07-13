@@ -14,7 +14,11 @@ variable "app_service_name" {
   type = string
 }
 
-variable "authentication_identifier" {
+variable "authentication_identifier_production" {
+  type = string
+}
+
+variable "authentication_identifier_staging" {
   type = string
 }
 
@@ -30,6 +34,10 @@ variable "sentry_dsn" {
   type = string
 }
 
-variable "ancm_additional_error_page_link" {
+variable "ancm_additional_error_page_link_production" {
+  type = string
+}
+
+variable "ancm_additional_error_page_link_staging" {
   type = string
 }
