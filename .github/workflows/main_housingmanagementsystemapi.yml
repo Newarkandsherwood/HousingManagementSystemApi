@@ -5,7 +5,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    types: [opened, synchronize, reopened, closed]
+    types: [ opened, synchronize, reopened, closed ]
     branches:
       - main
 
@@ -87,15 +87,17 @@ jobs:
       - name: Setup tfvars
         run: |
           touch env.tfvars
-          echo "service_plan_name               = \"${{ secrets.SERVICE_PLAN_NAME }}\"" >> env.tfvars
-          echo "resource_group_name             = \"${{ secrets.RESOURCE_GROUP_NAME }}\"" >> env.tfvars
-          echo "resource_group_location         = \"${{ secrets.RESOURCE_GROUP_LOCATION }}\"" >> env.tfvars
-          echo "app_service_name                = \"${{ secrets.APP_SERVICE_NAME }}\"" >> env.tfvars
-          echo "authentication_identifier       = \"${{ secrets.AUTHENTICATION_IDENTIFIER }}\"" >> env.tfvars
-          echo "jwt_secret_production           = \"${{ secrets.JWT_SECRET_PRODUCTION }}\"" >> env.tfvars
-          echo "jwt_secret_staging              = \"${{ secrets.JWT_SECRET_STAGING }}\"" >> env.tfvars
-          echo "sentry_dsn                      = \"${{ secrets.SENTRY_DSN }}\"" >> env.tfvars
-          echo "ancm_additional_error_page_link = \"${{ secrets.ANCM_ADDITIONAL_ERROR_PAGE_LINK }}\"" >> env.tfvars
+          echo "service_plan_name                          = \"${{ secrets.SERVICE_PLAN_NAME }}\"" >> env.tfvars
+          echo "resource_group_name                        = \"${{ secrets.RESOURCE_GROUP_NAME }}\"" >> env.tfvars
+          echo "resource_group_location                    = \"${{ secrets.RESOURCE_GROUP_LOCATION }}\"" >> env.tfvars
+          echo "app_service_name                           = \"${{ secrets.APP_SERVICE_NAME }}\"" >> env.tfvars
+          echo "authentication_identifier_production       = \"${{ secrets.AUTHENTICATION_IDENTIFIER_PRODUCTION }}\"" >> env.tfvars
+          echo "authentication_identifier_staging          = \"${{ secrets.AUTHENTICATION_IDENTIFIER_STAGING }}\"" >> env.tfvars
+          echo "jwt_secret_production                      = \"${{ secrets.JWT_SECRET_PRODUCTION }}\"" >> env.tfvars
+          echo "jwt_secret_staging                         = \"${{ secrets.JWT_SECRET_STAGING }}\"" >> env.tfvars
+          echo "sentry_dsn                                 = \"${{ secrets.SENTRY_DSN }}\"" >> env.tfvars
+          echo "ancm_additional_error_page_link_production = \"${{ secrets.ANCM_ADDITIONAL_ERROR_PAGE_LINK_PRODUCTION }}\"" >> env.tfvars
+          echo "ancm_additional_error_page_link_staging    = \"${{ secrets.ANCM_ADDITIONAL_ERROR_PAGE_LINK_STAGING }}\"" >> env.tfvars
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -111,7 +113,7 @@ jobs:
   deploy-staging:
     name: "Deploy Staging"
     runs-on: ubuntu-latest
-    needs: [test, format, build, infrastructure]
+    needs: [ test, format, build, infrastructure ]
     environment:
       name: 'Staging'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
