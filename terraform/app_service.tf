@@ -9,8 +9,9 @@ resource "azurerm_windows_web_app_slot" "hro-management-api-staging-slot" {
   https_only     = true
 
   app_settings = {
+    ANCM_ADDITIONAL_ERROR_PAGE_LINK = var.ancm_additional_error_page_link_production
     ASPNETCORE_ENVIRONMENT    = "Staging"
-    AUTHENTICATION_IDENTIFIER = var.authentication_identifier
+    AUTHENTICATION_IDENTIFIER = var.authentication_identifier_staging
     JWT_SECRET                = var.jwt_secret_staging
     SENTRY_DSN                = var.sentry_dsn
   }
@@ -40,8 +41,8 @@ resource "azurerm_windows_web_app" "hro-management-api" {
 
   app_settings = {
     ASPNETCORE_ENVIRONMENT          = "Production"
-    ANCM_ADDITIONAL_ERROR_PAGE_LINK = var.ancm_additional_error_page_link
-    AUTHENTICATION_IDENTIFIER       = var.authentication_identifier
+    ANCM_ADDITIONAL_ERROR_PAGE_LINK = var.ancm_additional_error_page_link_production
+    AUTHENTICATION_IDENTIFIER       = var.authentication_identifier_staging
     JWT_SECRET                      = var.jwt_secret_production
     SENTRY_DSN                      = var.sentry_dsn
   }
