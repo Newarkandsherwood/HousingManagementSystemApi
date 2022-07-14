@@ -9,7 +9,7 @@ resource "azurerm_windows_web_app_slot" "hro-management-api-staging-slot" {
   https_only     = true
 
   app_settings = {
-    ANCM_ADDITIONAL_ERROR_PAGE_LINK = var.ancm_additional_error_page_link_production
+    ANCM_ADDITIONAL_ERROR_PAGE_LINK = var.ancm_additional_error_page_link_staging
     ASPNETCORE_ENVIRONMENT    = "Staging"
     AUTHENTICATION_IDENTIFIER = var.authentication_identifier_staging
     JWT_SECRET                = var.jwt_secret_staging
