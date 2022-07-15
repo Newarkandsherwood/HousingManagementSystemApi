@@ -42,7 +42,7 @@ resource "azurerm_windows_web_app" "hro-management-api" {
   app_settings = {
     ASPNETCORE_ENVIRONMENT          = "Production"
     ANCM_ADDITIONAL_ERROR_PAGE_LINK = var.ancm_additional_error_page_link_production
-    AUTHENTICATION_IDENTIFIER       = var.authentication_identifier_staging
+    AUTHENTICATION_IDENTIFIER       = var.authentication_identifier_production
     JWT_SECRET                      = var.jwt_secret_production
     SENTRY_DSN                      = var.sentry_dsn
   }
