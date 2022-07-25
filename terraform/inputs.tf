@@ -41,3 +41,11 @@ variable "ancm_additional_error_page_link_production" {
 variable "ancm_additional_error_page_link_staging" {
   type = string
 }
+
+variable "subscription_id" {
+  type = string
+}
+
+variable "service_principal_id" {
+  type = string
+}
