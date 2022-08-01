@@ -39,6 +39,13 @@ resource "azurerm_windows_web_app" "hro-management-api" {
     health_check_path = "/health"
   }
 
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [var.service_principal_id]
+  }
+
+  key_vault_reference_identity_id = var.service_principal_id
+
   app_settings = {
     ASPNETCORE_ENVIRONMENT          = "Production"
     ANCM_ADDITIONAL_ERROR_PAGE_LINK = var.ancm_additional_error_page_link_production
