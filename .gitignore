@@ -463,6 +463,10 @@ local-tools/
 *.tfstate
 *.tfstate.*
 
+# Ignore locally generated terraform lock file, 
+# these may be created when running terraform locally.
+*.lock.hcl
+
 # Crash log files
 crash.log
 crash.*.log
