@@ -15,23 +15,28 @@ variable "app_service_name" {
 }
 
 variable "authentication_identifier_production" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "authentication_identifier_staging" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "jwt_secret_production" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "jwt_secret_staging" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "sentry_dsn" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "ancm_additional_error_page_link_production" {
