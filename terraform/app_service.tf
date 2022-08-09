@@ -15,6 +15,12 @@ resource "azurerm_windows_web_app_slot" "hro-management-api-staging-slot" {
     JWT_SECRET                      = var.jwt_secret_staging
     SENTRY_DSN                      = var.sentry_dsn
   }
+
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.hro-management-api-vault-access-identity.id]
+  }
+
   auth_settings {
     enabled = false
   }
