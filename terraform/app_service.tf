@@ -9,17 +9,19 @@ resource "azurerm_windows_web_app_slot" "hro-management-api-staging-slot" {
   https_only     = true
 
   app_settings = {
-    ANCM_ADDITIONAL_ERROR_PAGE_LINK = var.ancm_additional_error_page_link_staging
+    ANCM_ADDITIONAL_ERROR_PAGE_LINK = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.ancm-additional-error-page-link-staging.id})"
     ASPNETCORE_ENVIRONMENT          = "Staging"
-    AUTHENTICATION_IDENTIFIER       = var.authentication_identifier_staging
-    JWT_SECRET                      = var.jwt_secret_staging
-    SENTRY_DSN                      = var.sentry_dsn
+    AUTHENTICATION_IDENTIFIER       = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.authentication-identifier-staging.id})"
+    JWT_SECRET                      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.jwt-secret-staging.id})"
+    SENTRY_DSN                      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.sentry-dsn.id})"
   }
 
   identity {
     type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.hro-management-api-vault-access-identity.id]
   }
+
+  key_vault_reference_identity_id = azurerm_user_assigned_identity.hro-management-api-vault-access-identity.id
 
   auth_settings {
     enabled = false

@@ -17,3 +17,47 @@ resource "azurerm_key_vault_access_policy" "hro-management-api-key-vault-access-
     "Get",
   ]
 }
+
+resource "azurerm_key_vault_secret" "sentry-dsn" {
+  name         = "sentry-dsn"
+  value        = var.sentry_dsn
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+#---- Staging secrets
+resource "azurerm_key_vault_secret" "ancm-additional-error-page-link-staging" {
+  name         = "ancm-additional-error-page-link-staging"
+  value        = var.ancm_additional_error_page_link_staging
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "authentication-identifier-staging" {
+  name         = "authentication-identifier-staging"
+  value        = var.authentication_identifier_staging
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "jwt-secret-staging" {
+  name         = "jwt-secret-staging"
+  value        = var.jwt_secret_staging
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+# #---- Production secrets
+# resource "azurerm_key_vault_secret" "ancm-additional-error-page-link-production" {
+#   name         = "ancm-additional-error-page-link-production"
+#   value        = var.ancm_additional_error_page_link_production
+#   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+# }
+
+# resource "azurerm_key_vault_secret" "authentication-identifier-production" {
+#   name         = "authentication-identifier-production"
+#   value        = var.authentication_identifier_production
+#   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+# }
+
+# resource "azurerm_key_vault_secret" "jwt-secret-production" {
+#   name         = "jwt-secret-production"
+#   value        = var.jwt_secret_production
+#   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+# }
