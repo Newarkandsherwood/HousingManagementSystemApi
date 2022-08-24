@@ -56,9 +56,9 @@ resource "azurerm_windows_web_app" "hro-management-api" {
 
   app_settings = {
     ASPNETCORE_ENVIRONMENT          = "Production"
-    ANCM_ADDITIONAL_ERROR_PAGE_LINK = var.ancm_additional_error_page_link_production
-    AUTHENTICATION_IDENTIFIER       = var.authentication_identifier_production
-    JWT_SECRET                      = var.jwt_secret_production
-    SENTRY_DSN                      = var.sentry_dsn
+    ANCM_ADDITIONAL_ERROR_PAGE_LINK = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.ancm-additional-error-page-link-production.id})"
+    AUTHENTICATION_IDENTIFIER       = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.authentication-identifier-production.id})"
+    JWT_SECRET                      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.jwt-secret-production.id})"
+    SENTRY_DSN                      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.sentry-dsn.id})"
   }
 }
