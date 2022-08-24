@@ -44,20 +44,20 @@ resource "azurerm_key_vault_secret" "jwt-secret-staging" {
 }
 
 # #---- Production secrets
-# resource "azurerm_key_vault_secret" "ancm-additional-error-page-link-production" {
-#   name         = "ancm-additional-error-page-link-production"
-#   value        = var.ancm_additional_error_page_link_production
-#   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
-# }
+resource "azurerm_key_vault_secret" "ancm-additional-error-page-link-production" {
+  name         = "ancm-additional-error-page-link-production"
+  value        = var.ancm_additional_error_page_link_production
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
 
-# resource "azurerm_key_vault_secret" "authentication-identifier-production" {
-#   name         = "authentication-identifier-production"
-#   value        = var.authentication_identifier_production
-#   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
-# }
+resource "azurerm_key_vault_secret" "authentication-identifier-production" {
+  name         = "authentication-identifier-production"
+  value        = var.authentication_identifier_production
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
 
-# resource "azurerm_key_vault_secret" "jwt-secret-production" {
-#   name         = "jwt-secret-production"
-#   value        = var.jwt_secret_production
-#   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
-# }
+resource "azurerm_key_vault_secret" "jwt-secret-production" {
+  name         = "jwt-secret-production"
+  value        = var.jwt_secret_production
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
