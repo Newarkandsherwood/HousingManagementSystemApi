@@ -22,44 +22,19 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             this.systemUnderTest = new AddressesCosmosGateway();
         }
 
-//         [Theory]
-//         [MemberData(nameof(InvalidArgumentTestData))]
-// #pragma warning disable xUnit1026
-// #pragma warning disable CA1707
-//         public async void GivenInvalidPostcodeArgument_WhenSearchingForPostcode_ThenAnExceptionIsThrown<T>(T exception, string postcode) where T : Exception
-// #pragma warning restore CA1707
-// #pragma warning restore xUnit1026
-//         {
-//             // Arrange
-//
-//             // Act
-//             Func<Task> act = async () => await systemUnderTest.SearchByPostcode(postcode);
-//
-//             // Assert
-//             await act.Should().ThrowExactlyAsync<T>();
-//         }
-//
-//         public static IEnumerable<object[]> InvalidArgumentTestData()
-//         {
-//             yield return new object[] { new ArgumentNullException(), null };
-//             yield return new object[] { new ArgumentException(), "" };
-//             yield return new object[] { new ArgumentException(), " " };
-//         }
-//
-//         [Fact]
-// #pragma warning disable CA1707
-//         public async void GivenValidPostcodeArgument_WhenSearchingForPostcode_ThenNoExceptionIsThrown()
-// #pragma warning restore CA1707
-//         {
-//             // Arrange
-//
-//             // Act
-//             Func<Task> act = async () => await systemUnderTest.SearchByPostcode("M3 OW");
-//
-//             // Assert
-//             await act.Should().NotThrowAsync();
-//         }
-//
+
+        [Fact]
+        public async void Test_Get_addresses()
+        {
+            // Arrange
+
+            // Act
+            Func<Task> act = async () => await this.systemUnderTest.SearchByPostcode("NG21 9LQ");
+
+            // Assert
+            await act.Should().NotThrowAsync();
+        }
+
 //         [Fact]
 // #pragma warning disable CA1707
 //         public async void GivenValidPostcodeArgument_WhenSearchingForPostcode_ThenAddressesAreRetrievedFromTheDatabase()
