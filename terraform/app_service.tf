@@ -14,11 +14,11 @@ resource "azurerm_windows_web_app_slot" "hro-management-api-staging-slot" {
     AUTHENTICATION_IDENTIFIER       = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.authentication-identifier-staging.id})"
     JWT_SECRET                      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.jwt-secret-staging.id})"
     SENTRY_DSN                      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.sentry-dsn.id})"
-  
-    COSMOS_DATABASE_ID              = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-database-id.id})"
-    COSMOS_TENANT_CONTAINER_ID      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-tenant-container-id.id})"
-    COSMOS_ENDPOINT_URL             = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-endpoint-url.id})"
-    COSMOS_AUTHORIZATION_KEY        = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-authorization-key.id})"
+
+    COSMOS_DATABASE_ID         = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-database-id.id})"
+    COSMOS_TENANT_CONTAINER_ID = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-tenant-container-id.id})"
+    COSMOS_ENDPOINT_URL        = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-endpoint-url.id})"
+    COSMOS_AUTHORIZATION_KEY   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-authorization-key.id})"
   }
 
   identity {
@@ -69,5 +69,5 @@ resource "azurerm_windows_web_app" "hro-management-api" {
     COSMOS_TENANT_CONTAINER_ID      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-tenant-container-id.id})"
     COSMOS_ENDPOINT_URL             = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-endpoint-url.id})"
     COSMOS_AUTHORIZATION_KEY        = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-authorization-key.id})"
-}
+  }
 }
