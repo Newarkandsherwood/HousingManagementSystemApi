@@ -8,12 +8,10 @@ using Microsoft.OpenApi.Models;
 
 namespace HousingManagementSystemApi
 {
-    using System.Data.SqlClient;
     using Gateways;
     using Helpers;
     using HousingRepairsOnline.Authentication.DependencyInjection;
     using Microsoft.Azure.Cosmos;
-    using Repositories;
     using UseCases;
 
     public class Startup
