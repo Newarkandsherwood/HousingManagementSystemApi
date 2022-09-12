@@ -24,7 +24,8 @@ namespace HousingManagementSystemApi.Tests.HelperTests
         {
             // Arrange
             this.feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
-            this.containerMock.Setup(_ => _.GetItemQueryIterator<PropertyAddress>("TEST", null, null)) //It.IsAny<string>()
+            this.containerMock
+                .Setup(_ => _.GetItemQueryIterator<PropertyAddress>("TEST", null, null)) //It.IsAny<string>()
                 .Returns(this.feedIteratorMock.Object);
 
             // Act
@@ -33,18 +34,19 @@ namespace HousingManagementSystemApi.Tests.HelperTests
             // Assert
             this.containerMock.Verify(m => m.GetItemQueryIterator<PropertyAddress>(
                 It.Is<QueryDefinition>(u =>
-                        u.QueryText == "SELECT * FROM c WHERE (UPPER(REPLACE(c.PostalCode, ' ','')))  = (UPPER(REPLACE(@postcode, ' ','')))  ORDER BY c.AddressLine[0] ASC"
-                        //&& u.WithParameter("", "") == ("", "")
+                        u.QueryText ==
+                        "SELECT * FROM c WHERE (UPPER(REPLACE(c.PostalCode, ' ','')))  = (UPPER(REPLACE(@postcode, ' ','')))  ORDER BY c.AddressLine[0] ASC"
                 )
-
-                ,It.IsAny<string>(), null));
+                , It.IsAny<string>(), null));
         }
+
         [Fact]
         public void Test_Query_Definition_returned_with_parameter()
         {
             // Arrange
             this.feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
-            this.containerMock.Setup(_ => _.GetItemQueryIterator<PropertyAddress>("TEST", null, null)) //It.IsAny<string>()
+            this.containerMock
+                .Setup(_ => _.GetItemQueryIterator<PropertyAddress>("TEST", null, null)) //It.IsAny<string>()
                 .Returns(this.feedIteratorMock.Object);
 
             // Act
@@ -53,13 +55,10 @@ namespace HousingManagementSystemApi.Tests.HelperTests
             // Assert
             this.containerMock.Verify(m => m.GetItemQueryIterator<PropertyAddress>(
                 It.Is<QueryDefinition>(u =>
-
                     u.GetQueryParameters()[0].Name == "@postcode"
                     && u.GetQueryParameters()[0].Value.ToString() == "NG21 7HT"
                 ),
                 It.IsAny<string>(), null));
         }
-
-
     }
 }

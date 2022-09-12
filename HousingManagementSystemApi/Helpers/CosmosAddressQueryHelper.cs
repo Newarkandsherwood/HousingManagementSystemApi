@@ -3,7 +3,7 @@ namespace HousingManagementSystemApi.Helpers;
 using HACT.Dtos;
 using Microsoft.Azure.Cosmos;
 
-public class CosmosAddressQueryHelper: ICosmosAddressQueryHelper
+public class CosmosAddressQueryHelper : ICosmosAddressQueryHelper
 {
     private readonly Container cosmosContainer;
     public CosmosAddressQueryHelper(Container container) => this.cosmosContainer = container;
