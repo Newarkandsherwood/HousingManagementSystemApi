@@ -3,30 +3,37 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using FluentAssertions;
     using Gateways;
     using HACT.Dtos;
+    using Helpers;
+    using Microsoft.Azure.Cosmos;
     using Moq;
-    using Repositories;
     using Xunit;
 
-    public class AddressesCosmosGatewayTests
+    public class AddressesCosmosGatewayCosmosQueryHelperTests
     {
         private AddressesCosmosGateway systemUnderTest;
-        private Mock<IAddressesRepository> addressesRepositoryMock;
 
-        public AddressesCosmosGatewayTests()
+        private Mock<ICosmosAddressQueryHelper> cosmosQueryHelperMock;
+        private Mock<FeedIterator<PropertyAddress>> feedIteratorMock;
+
+        public AddressesCosmosGatewayCosmosQueryHelperTests()
         {
-            this.addressesRepositoryMock = new Mock<IAddressesRepository>();
-            this.systemUnderTest = new AddressesCosmosGateway();
+            this.cosmosQueryHelperMock = new Mock<ICosmosAddressQueryHelper>();
+            this.systemUnderTest = new AddressesCosmosGateway(this.cosmosQueryHelperMock.Object);
+            this.feedIteratorMock = new Mock<FeedIterator<PropertyAddress>>();
         }
 
-
         [Fact]
-        public async void Test_Get_addresses()
+        public async void Test_Get_addresses_Not_Throws_Exception()
         {
             // Arrange
+            this.feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
+            this.cosmosQueryHelperMock.Setup(_ => _.GetItemQueryIterator<PropertyAddress>("NG21 9LQ"))
+                .Returns(this.feedIteratorMock.Object);
 
             // Act
             Func<Task> act = async () => await this.systemUnderTest.SearchByPostcode("NG21 9LQ");
@@ -35,21 +42,56 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             await act.Should().NotThrowAsync();
         }
 
-//         [Fact]
-// #pragma warning disable CA1707
-//         public async void GivenValidPostcodeArgument_WhenSearchingForPostcode_ThenAddressesAreRetrievedFromTheDatabase()
-// #pragma warning restore CA1707
-//         {
-//             // Arrange
-//             const string postcode = "M3 OW";
-//             addressesRepositoryMock.Setup(repository => repository.GetAddressesByPostcode(postcode))
-//                 .ReturnsAsync(new[] { new PropertyAddress() });
-//
-//             // Act
-//             var results = await this.systemUnderTest.SearchByPostcode(postcode);
-//
-//             // Assert
-//             Assert.True(results.Any());
-//         }
+        [Fact]
+        public async void Test_No_Addresses_Returned_When_Iterator_No_Results()
+        {
+            // Arrange
+            this.feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
+            this.cosmosQueryHelperMock.Setup(_ => _.GetItemQueryIterator<PropertyAddress>("NG21 9LQ"))
+                .Returns(this.feedIteratorMock.Object);
+
+            // Act
+            var results = await this.systemUnderTest.SearchByPostcode("NG21 9LQ");
+
+            // Assert
+            Assert.True(!results.Any());
+        }
+
+        [Fact]
+        public async void Test_Addresses_Returned_When_Iterator_Results()
+        {
+            // Arrange
+            this.feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(true);
+            var addressList = new List<PropertyAddress>();
+            addressList.Add(new PropertyAddress() { CityName = "test", PostalCode = "NG21 9LQ" });
+
+            var feedResponseMock = new Mock<FeedResponse<PropertyAddress>>();
+            feedResponseMock.Setup(x => x.GetEnumerator()).Returns(addressList.GetEnumerator());
+
+
+            this.feedIteratorMock
+                .Setup(f => f.ReadNextAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(feedResponseMock.Object)
+                .Callback(() => this.feedIteratorMock
+                    .Setup(f => f.HasMoreResults)
+                    .Returns(false));
+
+            var containerMock = new Mock<Container>();
+            containerMock
+                .Setup(c => c.GetItemQueryIterator<PropertyAddress>(
+                    It.IsAny<QueryDefinition>(),
+                    It.IsAny<string>(),
+                    It.IsAny<QueryRequestOptions>()))
+                .Returns(this.feedIteratorMock.Object);
+
+            this.cosmosQueryHelperMock.Setup(_ => _.GetItemQueryIterator<PropertyAddress>("NG21 9LQ"))
+                .Returns(this.feedIteratorMock.Object);
+
+            // Act
+            var results = await this.systemUnderTest.SearchByPostcode("NG21 9LQ");
+
+            // Assert
+            Assert.True(results.Count() == 1);
+        }
     }
 }
