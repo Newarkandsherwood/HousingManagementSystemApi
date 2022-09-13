@@ -42,7 +42,7 @@ namespace HousingManagementSystemApi.Tests.HelperTests
         }
 
         [Fact]
-        public void Test_Query_Definition_returned_with_parameter()
+        public void Test_Query_Definition_Returned_With_Parameter()
         {
             // Arrange
             feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
