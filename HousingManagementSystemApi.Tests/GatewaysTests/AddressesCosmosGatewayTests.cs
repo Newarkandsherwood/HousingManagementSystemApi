@@ -56,7 +56,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             var results = await this.systemUnderTest.SearchByPostcode(MockPostcode);
 
             // Assert
-            Assert.True(!results.Any());
+            Assert.False(results.Any());
         }
 
         [Fact]
