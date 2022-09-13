@@ -64,9 +64,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         {
             // Arrange
             feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(true);
-            var addressList = new List<PropertyAddress>();
-            addressList.Add(new PropertyAddress() { CityName = "test", PostalCode = MockPostcode });
-
+            var addressList = new List<PropertyAddress> { new() { CityName = "test", PostalCode = MockPostcode } };
             var feedResponseMock = new Mock<FeedResponse<PropertyAddress>>();
             feedResponseMock.Setup(x => x.GetEnumerator()).Returns(addressList.GetEnumerator());
 
