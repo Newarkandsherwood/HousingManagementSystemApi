@@ -41,7 +41,7 @@ namespace HousingManagementSystemApi
 
             services.AddHttpClient();
             // services.AddTransient<IAddressesGateway, AddressesDatabaseGateway>();
-            services.AddTransient<IAddressesGateway, DummyAddressesGateway>();
+            // services.AddTransient<IAddressesGateway, DummyAddressesGateway>();
             services.AddTransient<IAddressesGateway, AddressesCosmosGateway>();
 
             services.AddTransient<ICosmosAddressQueryHelper, CosmosAddressQueryHelper>(s => new CosmosAddressQueryHelper(getCosmosClientContainer()));
