@@ -4,7 +4,6 @@ using HACT.Dtos;
 namespace HousingManagementSystemApi.Gateways
 {
     using Helpers;
-    using Microsoft.Azure.Cosmos;
 
     public class AddressesCosmosGateway : IAddressesGateway
     {
