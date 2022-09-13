@@ -18,8 +18,8 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
 
         public AddressesDatabaseGatewayTests()
         {
-            this.addressesRepositoryMock = new Mock<IAddressesRepository>();
-            this.systemUnderTest = new AddressesDatabaseGateway(this.addressesRepositoryMock.Object);
+            addressesRepositoryMock = new Mock<IAddressesRepository>();
+            systemUnderTest = new AddressesDatabaseGateway(addressesRepositoryMock.Object);
         }
 
         [Theory]
@@ -71,7 +71,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
                 .ReturnsAsync(new[] { new PropertyAddress() });
 
             // Act
-            var results = await this.systemUnderTest.SearchByPostcode(postcode);
+            var results = await systemUnderTest.SearchByPostcode(postcode);
 
             // Assert
             Assert.True(results.Any());

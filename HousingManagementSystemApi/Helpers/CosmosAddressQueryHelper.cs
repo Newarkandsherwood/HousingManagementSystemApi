@@ -6,10 +6,10 @@ namespace HousingManagementSystemApi.Helpers
     public class CosmosAddressQueryHelper : ICosmosAddressQueryHelper
     {
         private readonly Container cosmosContainer;
-        public CosmosAddressQueryHelper(Container container) => this.cosmosContainer = container;
+        public CosmosAddressQueryHelper(Container container) => cosmosContainer = container;
 
         public FeedIterator<PropertyAddress> GetItemQueryIterator<T>(string postcode) =>
-            this.cosmosContainer.GetItemQueryIterator<PropertyAddress>(GetQueryDefinition(postcode));
+            cosmosContainer.GetItemQueryIterator<PropertyAddress>(GetQueryDefinition(postcode));
 
         private static QueryDefinition GetQueryDefinition(string postcode)
         {

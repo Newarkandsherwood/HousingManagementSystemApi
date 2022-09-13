@@ -15,25 +15,25 @@ namespace HousingManagementSystemApi.Tests.HelperTests
 
         public CosmosAddressQueryHelperTests()
         {
-            this.containerMock = new Mock<Container>();
-            this.systemUnderTest = new CosmosAddressQueryHelper(this.containerMock.Object);
-            this.feedIteratorMock = new Mock<FeedIterator<PropertyAddress>>();
+            containerMock = new Mock<Container>();
+            systemUnderTest = new CosmosAddressQueryHelper(containerMock.Object);
+            feedIteratorMock = new Mock<FeedIterator<PropertyAddress>>();
         }
 
         [Fact]
         public void Test_Query_Definition_returned_with_querytext()
         {
             // Arrange
-            this.feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
-            this.containerMock
+            feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
+            containerMock
                 .Setup(_ => _.GetItemQueryIterator<PropertyAddress>("TEST", null, null)) //It.IsAny<string>()
-                .Returns(this.feedIteratorMock.Object);
+                .Returns(feedIteratorMock.Object);
 
             // Act
-            var result = this.systemUnderTest.GetItemQueryIterator<PropertyAddress>(MockPostcode);
+            var result = systemUnderTest.GetItemQueryIterator<PropertyAddress>(MockPostcode);
 
             // Assert
-            this.containerMock.Verify(m => m.GetItemQueryIterator<PropertyAddress>(
+            containerMock.Verify(m => m.GetItemQueryIterator<PropertyAddress>(
                 It.Is<QueryDefinition>(u =>
                         u.QueryText ==
                         "SELECT * FROM c WHERE (UPPER(REPLACE(c.PostalCode, ' ','')))  = (UPPER(REPLACE(@postcode, ' ','')))  ORDER BY c.AddressLine[0] ASC"
@@ -45,16 +45,16 @@ namespace HousingManagementSystemApi.Tests.HelperTests
         public void Test_Query_Definition_returned_with_parameter()
         {
             // Arrange
-            this.feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
-            this.containerMock
+            feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
+            containerMock
                 .Setup(_ => _.GetItemQueryIterator<PropertyAddress>("TEST", null, null))
-                .Returns(this.feedIteratorMock.Object);
+                .Returns(feedIteratorMock.Object);
 
             // Act
-            var result = this.systemUnderTest.GetItemQueryIterator<PropertyAddress>(MockPostcode);
+            var result = systemUnderTest.GetItemQueryIterator<PropertyAddress>(MockPostcode);
 
             // Assert
-            this.containerMock.Verify(m => m.GetItemQueryIterator<PropertyAddress>(
+            containerMock.Verify(m => m.GetItemQueryIterator<PropertyAddress>(
                 It.Is<QueryDefinition>(u =>
                     u.GetQueryParameters()[0].Name == "@postcode"
                     && u.GetQueryParameters()[0].Value.ToString() == MockPostcode
