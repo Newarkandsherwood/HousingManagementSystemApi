@@ -11,6 +11,7 @@ namespace HousingManagementSystemApi.Tests.HelperTests
         private CosmosAddressQueryHelper systemUnderTest;
         private Mock<Container> containerMock;
         private Mock<FeedIterator<PropertyAddress>> feedIteratorMock;
+        private const string MockPostcode = "NG21 9LQ";
 
         public CosmosAddressQueryHelperTests()
         {
@@ -29,7 +30,7 @@ namespace HousingManagementSystemApi.Tests.HelperTests
                 .Returns(this.feedIteratorMock.Object);
 
             // Act
-            var result = this.systemUnderTest.GetItemQueryIterator<PropertyAddress>("NG21 7HT");
+            var result = this.systemUnderTest.GetItemQueryIterator<PropertyAddress>(MockPostcode);
 
             // Assert
             this.containerMock.Verify(m => m.GetItemQueryIterator<PropertyAddress>(
@@ -50,13 +51,13 @@ namespace HousingManagementSystemApi.Tests.HelperTests
                 .Returns(this.feedIteratorMock.Object);
 
             // Act
-            var result = this.systemUnderTest.GetItemQueryIterator<PropertyAddress>("NG21 7HT");
+            var result = this.systemUnderTest.GetItemQueryIterator<PropertyAddress>(MockPostcode);
 
             // Assert
             this.containerMock.Verify(m => m.GetItemQueryIterator<PropertyAddress>(
                 It.Is<QueryDefinition>(u =>
                     u.GetQueryParameters()[0].Name == "@postcode"
-                    && u.GetQueryParameters()[0].Value.ToString() == "NG21 7HT"
+                    && u.GetQueryParameters()[0].Value.ToString() == MockPostcode
                 ),
                 It.IsAny<string>(), null));
         }
