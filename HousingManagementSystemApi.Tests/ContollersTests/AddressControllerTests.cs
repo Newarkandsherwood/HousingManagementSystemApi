@@ -11,6 +11,7 @@ using Xunit;
 
 namespace HousingManagementSystemApi.Tests.ContollersTests
 {
+    using System.Configuration;
 
     public class AddressControllerTests : ControllerTests
     {
@@ -71,7 +72,7 @@ namespace HousingManagementSystemApi.Tests.ContollersTests
             // Arrange
             const string errorMessage = "An error message";
             retrieveAddressesUseCaseMock.Setup(x => x.Execute(It.IsAny<string>()))
-                .Throws(new Exception(errorMessage));
+                .Throws(new ConfigurationErrorsException(errorMessage));
 
             // Act
             var result = await systemUnderTest.Address(postcode);

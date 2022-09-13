@@ -22,10 +22,7 @@ namespace HousingManagementSystemApi.Gateways
             while (queryResultSetIterator.HasMoreResults)
             {
                 var currentResultSet = await queryResultSetIterator.ReadNextAsync();
-                foreach (var address in currentResultSet)
-                {
-                    addresses.Add(address);
-                }
+                addresses.AddRange(currentResultSet);
             }
 
             return addresses;

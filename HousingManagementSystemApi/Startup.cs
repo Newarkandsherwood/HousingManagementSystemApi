@@ -89,9 +89,5 @@ namespace HousingManagementSystemApi
             return cosmosClient.GetContainer(EnvironmentVariableHelper.GetEnvironmentVariable("COSMOS_DATABASE_ID"),
                 EnvironmentVariableHelper.GetEnvironmentVariable("COSMOS_TENANT_CONTAINER_ID"));
         }
-
-        private static string GetEnvironmentVariable(string name) =>
-            Environment.GetEnvironmentVariable(name) ??
-            throw new InvalidOperationException($"Incorrect configuration: '{name}' environment variable must be set");
     }
 }
