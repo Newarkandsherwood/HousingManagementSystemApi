@@ -46,7 +46,7 @@ namespace HousingManagementSystemApi.Tests.HelperTests
             // Arrange
             this.feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
             this.containerMock
-                .Setup(_ => _.GetItemQueryIterator<PropertyAddress>("TEST", null, null)) //It.IsAny<string>()
+                .Setup(_ => _.GetItemQueryIterator<PropertyAddress>("TEST", null, null))
                 .Returns(this.feedIteratorMock.Object);
 
             // Act
