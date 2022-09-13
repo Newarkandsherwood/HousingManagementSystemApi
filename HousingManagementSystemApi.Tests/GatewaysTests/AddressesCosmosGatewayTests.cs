@@ -70,7 +70,6 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             var feedResponseMock = new Mock<FeedResponse<PropertyAddress>>();
             feedResponseMock.Setup(x => x.GetEnumerator()).Returns(addressList.GetEnumerator());
 
-
             this.feedIteratorMock
                 .Setup(f => f.ReadNextAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(feedResponseMock.Object)
