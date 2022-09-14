@@ -22,7 +22,7 @@ namespace HousingManagementSystemApi.Tests.HelperTests
 
         [Fact]
 #pragma warning disable CA1707
-        public void Test_Query_Definition_returned_with_querytext()
+        public void Test_Query_Definition_Returned_With_Querytext_Containing_SELECT()
 #pragma warning restore CA1707
         {
             // Arrange
@@ -37,15 +37,14 @@ namespace HousingManagementSystemApi.Tests.HelperTests
             // Assert
             containerMock.Verify(m => m.GetItemQueryIterator<PropertyAddress>(
                 It.Is<QueryDefinition>(u =>
-                        u.QueryText ==
-                        "SELECT * FROM c WHERE (UPPER(REPLACE(c.PostalCode, ' ','')))  = (UPPER(REPLACE(@postcode, ' ','')))  ORDER BY c.AddressLine[0] ASC"
+                        u.QueryText.Contains("SELECT")
                 )
                 , It.IsAny<string>(), null));
         }
 
         [Fact]
 #pragma warning disable CA1707
-        public void Test_Query_Definition_returned_with_parameter()
+        public void Test_Query_Definition_Returned_With_Parameter()
 #pragma warning restore CA1707
         {
             // Arrange
