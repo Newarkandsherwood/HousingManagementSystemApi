@@ -30,7 +30,9 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         }
 
         [Fact]
+#pragma warning disable CA1707
         public async void Test_Get_addresses_Not_Throws_Exception()
+#pragma warning restore CA1707
         {
             // Arrange
             feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
@@ -45,7 +47,9 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         }
 
         [Fact]
+#pragma warning disable CA1707
         public async void Test_No_Addresses_Returned_When_Iterator_No_Results()
+#pragma warning restore CA1707
         {
             // Arrange
             feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
@@ -60,7 +64,9 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         }
 
         [Fact]
+#pragma warning disable CA1707
         public async void Test_Addresses_Returned_When_Iterator_Results()
+#pragma warning restore CA1707
         {
             // Arrange
             feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(true);
@@ -90,7 +96,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             var results = await systemUnderTest.SearchByPostcode(MockPostcode);
 
             // Assert
-            Assert.True(results.Count() == 1);
+            Assert.Single(results);
         }
     }
 }

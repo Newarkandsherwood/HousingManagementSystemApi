@@ -21,7 +21,9 @@ namespace HousingManagementSystemApi.Tests.HelperTests
         }
 
         [Fact]
+#pragma warning disable CA1707
         public void Test_Query_Definition_returned_with_querytext()
+#pragma warning restore CA1707
         {
             // Arrange
             feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
@@ -42,7 +44,9 @@ namespace HousingManagementSystemApi.Tests.HelperTests
         }
 
         [Fact]
+#pragma warning disable CA1707
         public void Test_Query_Definition_returned_with_parameter()
+#pragma warning restore CA1707
         {
             // Arrange
             feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
