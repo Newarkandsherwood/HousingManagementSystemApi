@@ -54,7 +54,7 @@ namespace HousingManagementSystemApi.Tests.HelperTests
                 .Returns(feedIteratorMock.Object);
 
             // Act
-            var result = systemUnderTest.GetItemQueryIterator<PropertyAddress>(MockPostcode);
+            systemUnderTest.GetItemQueryIterator<PropertyAddress>(MockPostcode);
 
             // Assert
             containerMock.Verify(m => m.GetItemQueryIterator<PropertyAddress>(
