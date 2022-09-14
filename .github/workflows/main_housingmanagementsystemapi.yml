@@ -22,7 +22,7 @@ jobs:
       - name: Install dotnet format
         run: dotnet tool update --global dotnet-format
       - name: Run dotnet format
-        run: dotnet format --check --verbosity diagnostic
+        run: dotnet format --verify-no-changes --verbosity diagnostic
       - name: Setup Terraform
         if: always()
         uses: hashicorp/setup-terraform@v2
@@ -145,14 +145,14 @@ jobs:
           slot-name: 'Staging'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_STAGING }}
           package: .
-          
+
   deploy-production:
     name: "Deploy Production"
     runs-on: ubuntu-latest
     needs: deploy-staging
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }} 
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       - name: Add mask to obscure secrets in debug logs
