@@ -11,6 +11,7 @@ using Xunit;
 
 namespace HousingManagementSystemApi.Tests.ContollersTests
 {
+    using System.Configuration;
 
     public class AddressControllerTests : ControllerTests
     {

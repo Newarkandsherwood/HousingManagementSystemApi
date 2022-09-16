@@ -8,10 +8,10 @@ using Microsoft.OpenApi.Models;
 
 namespace HousingManagementSystemApi
 {
-    using System.Data.SqlClient;
     using Gateways;
+    using Helpers;
     using HousingRepairsOnline.Authentication.DependencyInjection;
-    using Repositories;
+    using Microsoft.Azure.Cosmos;
     using UseCases;
 
     public class Startup
@@ -39,11 +39,16 @@ namespace HousingManagementSystemApi
 
             services.AddHttpClient();
             // services.AddTransient<IAddressesGateway, AddressesDatabaseGateway>();
-            services.AddTransient<IAddressesGateway, DummyAddressesGateway>();
+            // services.AddTransient<IAddressesGateway, DummyAddressesGateway>();
+            services.AddTransient<IAddressesGateway, AddressesCosmosGateway>();
+
+            services.AddTransient<ICosmosAddressQueryHelper, CosmosAddressQueryHelper>(s => new CosmosAddressQueryHelper(getCosmosClientContainer()));
+
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HousingManagementSystemApi", Version = "v1" });
+                c.AddJwtSecurityScheme();
             });
 
             services.AddHealthChecks();
@@ -76,8 +81,13 @@ namespace HousingManagementSystemApi
             });
         }
 
-        private static string GetEnvironmentVariable(string name) =>
-            Environment.GetEnvironmentVariable(name) ??
-            throw new InvalidOperationException($"Incorrect configuration: '{name}' environment variable must be set");
+        private static Container getCosmosClientContainer()
+        {
+            var cosmosClient = new CosmosClient(EnvironmentVariableHelper.GetEnvironmentVariable("COSMOS_ENDPOINT_URL"),
+                EnvironmentVariableHelper.GetEnvironmentVariable("COSMOS_AUTHORIZATION_KEY"));
+
+            return cosmosClient.GetContainer(EnvironmentVariableHelper.GetEnvironmentVariable("COSMOS_DATABASE_ID"),
+                EnvironmentVariableHelper.GetEnvironmentVariable("COSMOS_TENANT_CONTAINER_ID"));
+        }
     }
 }

@@ -23,6 +23,27 @@ resource "azurerm_key_vault_secret" "sentry-dsn" {
   value        = var.sentry_dsn
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
+resource "azurerm_key_vault_secret" "cosmos-database-id" {
+  name         = "cosmos-database-id"
+  value        = var.sentry_dsn
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+resource "azurerm_key_vault_secret" "cosmos-tenant-container-id" {
+  name         = "cosmos-tenant-container-id"
+  value        = var.sentry_dsn
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+resource "azurerm_key_vault_secret" "cosmos-endpoint-url" {
+  name         = "cosmos-endpoint-url"
+  value        = var.sentry_dsn
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+resource "azurerm_key_vault_secret" "cosmos-authorization-key" {
+  name         = "cosmos-authorization-key"
+  value        = var.sentry_dsn
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
 
 #---- Staging secrets
 resource "azurerm_key_vault_secret" "ancm-additional-error-page-link-staging" {

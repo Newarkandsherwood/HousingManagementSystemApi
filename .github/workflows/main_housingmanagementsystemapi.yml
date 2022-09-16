@@ -104,6 +104,12 @@ jobs:
           echo "sentry_dsn                                        = \"${{ secrets.SENTRY_DSN }}\"" >> env.tfvars
           echo "ancm_additional_error_page_link_production        = \"${{ secrets.ANCM_ADDITIONAL_ERROR_PAGE_LINK_PRODUCTION }}\"" >> env.tfvars
           echo "ancm_additional_error_page_link_staging           = \"${{ secrets.ANCM_ADDITIONAL_ERROR_PAGE_LINK_STAGING }}\"" >> env.tfvars
+          
+          echo "cosmos_database_id                                = \"${{ secrets.COSMOS_DATABASE_ID }}\"" >> env.tfvars
+          echo "cosmos_tenant_container_id                        = \"${{ secrets.COSMOS_TENANT_CONTAINER_ID }}\"" >> env.tfvars
+          echo "cosmos_endpoint_url                               = \"${{ secrets.COSMOS_ENDPOINT_URL }}\"" >> env.tfvars
+          echo "cosmos_authorization_key                          = \"${{ secrets.COSMOS_AUTHORIZATION_KEY }}\"" >> env.tfvars
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -131,7 +137,11 @@ jobs:
           echo "::add-mask::${{ secrets.AUTHENTICATION_IDENTIFIER_STAGING }}"
           echo "::add-mask::${{ secrets.JWT_SECRET_STAGING }}"
           echo "::add-mask::${{ secrets.SENTRY_DSN }}"
-
+          echo "::add-mask::${{ secrets.COSMOS_DATABASE_ID }}"
+          echo "::add-mask::${{ secrets.COSMOS_TENANT_CONTAINER_ID }}"
+          echo "::add-mask::${{ secrets.COSMOS_ENDPOINT_URL }}"
+          echo "::add-mask::${{ secrets.COSMOS_AUTHORIZATION_KEY }}"
+        
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
