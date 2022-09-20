@@ -171,6 +171,10 @@ jobs:
           echo "::add-mask::${{ secrets.AUTHENTICATION_IDENTIFIER_PRODUCTION }}"
           echo "::add-mask::${{ secrets.JWT_SECRET_PRODUCTION }}"
           echo "::add-mask::${{ secrets.SENTRY_DSN }}"
+          echo "::add-mask::${{ secrets.COSMOS_DATABASE_ID }}"
+          echo "::add-mask::${{ secrets.COSMOS_TENANT_CONTAINER_ID }}"
+          echo "::add-mask::${{ secrets.COSMOS_ENDPOINT_URL }}"
+          echo "::add-mask::${{ secrets.COSMOS_AUTHORIZATION_KEY }}"
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v2

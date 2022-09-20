@@ -25,22 +25,22 @@ resource "azurerm_key_vault_secret" "sentry-dsn" {
 }
 resource "azurerm_key_vault_secret" "cosmos-database-id" {
   name         = "cosmos-database-id"
-  value        = var.sentry_dsn
+  value        = var.cosmos_database_id
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 resource "azurerm_key_vault_secret" "cosmos-tenant-container-id" {
   name         = "cosmos-tenant-container-id"
-  value        = var.sentry_dsn
+  value        = var.cosmos_tenant_container_id
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 resource "azurerm_key_vault_secret" "cosmos-endpoint-url" {
   name         = "cosmos-endpoint-url"
-  value        = var.sentry_dsn
+  value        = var.cosmos_endpoint_url
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 resource "azurerm_key_vault_secret" "cosmos-authorization-key" {
   name         = "cosmos-authorization-key"
-  value        = var.sentry_dsn
+  value        = var.cosmos_authorization_key
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
