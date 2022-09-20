@@ -51,3 +51,22 @@ variable "azure_ad_tenant_id" {
   type      = string
   sensitive = true
 }
+
+variable "cosmos_database_id" {
+  type      = string
+  sensitive = true
+}
+
+variable "cosmos_tenant_container_id" {
+  type      = string
+  sensitive = true
+}
+
+variable "cosmos_endpoint_url" {
+  type      = string
+  sensitive = true
+}
+variable "cosmos_authorization_key" {
+  type      = string
+  sensitive = true
+}
