@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +10,6 @@ namespace HousingManagementSystemApi
     using Gateways;
     using Helpers;
     using HousingRepairsOnline.Authentication.DependencyInjection;
-    using Microsoft.Azure.Cosmos;
     using UseCases;
 
     public class Startup
@@ -42,8 +40,12 @@ namespace HousingManagementSystemApi
             // services.AddTransient<IAddressesGateway, DummyAddressesGateway>();
             services.AddTransient<IAddressesGateway, AddressesCosmosGateway>();
 
-            services.AddTransient<ICosmosAddressQueryHelper, CosmosAddressQueryHelper>(s => new CosmosAddressQueryHelper(getCosmosClientContainer()));
-
+            // services.AddTransient<ICosmosAddressQueryHelper, CosmosAddressQueryHelper>();
+            services.AddCosmosAddressContainers(new[]
+            {
+                "TENANT",
+                "COMMUNAL"
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -79,15 +81,6 @@ namespace HousingManagementSystemApi
                 endpoints.MapHealthChecks("/health");
                 endpoints.MapControllers().RequireAuthorization();
             });
-        }
-
-        private static Container getCosmosClientContainer()
-        {
-            var cosmosClient = new CosmosClient(EnvironmentVariableHelper.GetEnvironmentVariable("COSMOS_ENDPOINT_URL"),
-                EnvironmentVariableHelper.GetEnvironmentVariable("COSMOS_AUTHORIZATION_KEY"));
-
-            return cosmosClient.GetContainer(EnvironmentVariableHelper.GetEnvironmentVariable("COSMOS_DATABASE_ID"),
-                EnvironmentVariableHelper.GetEnvironmentVariable("COSMOS_TENANT_CONTAINER_ID"));
         }
     }
 }

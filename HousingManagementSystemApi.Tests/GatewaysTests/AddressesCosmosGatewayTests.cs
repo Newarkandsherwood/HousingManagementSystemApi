@@ -17,15 +17,18 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
     {
         private AddressesCosmosGateway systemUnderTest;
 
-        private Mock<ICosmosAddressQueryHelper> cosmosQueryHelperMock;
+        private Mock<IContainerResolver> containerResolverMock;
         private Mock<FeedIterator<PropertyAddress>> feedIteratorMock;
+        private readonly Mock<ICosmosAddressQueryHelper> cosmosQueryHelperMock;
 
         private const string MockPostcode = "NG21 9LQ";
+        private const string MockRepairType = "TENANT";
 
         public AddressesCosmosGatewayCosmosQueryHelperTests()
         {
+            containerResolverMock = new Mock<IContainerResolver>();
+            systemUnderTest = new AddressesCosmosGateway(containerResolverMock.Object);
             cosmosQueryHelperMock = new Mock<ICosmosAddressQueryHelper>();
-            systemUnderTest = new AddressesCosmosGateway(cosmosQueryHelperMock.Object);
             feedIteratorMock = new Mock<FeedIterator<PropertyAddress>>();
         }
 
@@ -40,7 +43,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
                 .Returns(feedIteratorMock.Object);
 
             // Act
-            Func<Task> act = async () => await systemUnderTest.SearchByPostcode(MockPostcode);
+            Func<Task> act = async () => await systemUnderTest.SearchByPostcode(MockPostcode, MockRepairType);
 
             // Assert
             await act.Should().NotThrowAsync();
@@ -57,7 +60,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
                 .Returns(feedIteratorMock.Object);
 
             // Act
-            var results = await systemUnderTest.SearchByPostcode(MockPostcode);
+            var results = await systemUnderTest.SearchByPostcode(MockPostcode, MockRepairType);
 
             // Assert
             Assert.False(results.Any());
@@ -93,7 +96,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
                 .Returns(feedIteratorMock.Object);
 
             // Act
-            var results = await systemUnderTest.SearchByPostcode(MockPostcode);
+            var results = await systemUnderTest.SearchByPostcode(MockPostcode, MockRepairType);
 
             // Assert
             Assert.Single(results);

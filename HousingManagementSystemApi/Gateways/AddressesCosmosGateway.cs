@@ -7,16 +7,14 @@ namespace HousingManagementSystemApi.Gateways
 
     public class AddressesCosmosGateway : IAddressesGateway
     {
-        private ICosmosAddressQueryHelper addressQueryHelper;
+        private readonly IContainerResolver cosmosContainerResolver;
 
-        public AddressesCosmosGateway(ICosmosAddressQueryHelper cosmosAddressQueryHelper)
-        {
-            addressQueryHelper = cosmosAddressQueryHelper;
-        }
+        public AddressesCosmosGateway(IContainerResolver containerResolver) => this.cosmosContainerResolver = containerResolver;
 
-        public async Task<IEnumerable<PropertyAddress>> SearchByPostcode(string postcode)
+        public async Task<IEnumerable<PropertyAddress>> SearchByPostcode(string postcode,
+            string repairType)
         {
-            using var queryResultSetIterator = addressQueryHelper.GetItemQueryIterator<PropertyAddress>(postcode);
+            using var queryResultSetIterator = this.AddressQueryHelper(repairType).GetItemQueryIterator<PropertyAddress>(postcode);
             var addresses = new List<PropertyAddress>();
 
             while (queryResultSetIterator.HasMoreResults)
@@ -27,5 +25,7 @@ namespace HousingManagementSystemApi.Gateways
 
             return addresses;
         }
+
+        private ICosmosAddressQueryHelper AddressQueryHelper(string repairType) => new CosmosAddressQueryHelper(this.cosmosContainerResolver.Resolve(repairType));
     }
 }

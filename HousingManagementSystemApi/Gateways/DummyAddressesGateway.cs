@@ -25,5 +25,7 @@ namespace HousingManagementSystemApi.Gateways
                     CityName = "Fake City"
                 }
             });
+
+        public Task<IEnumerable<PropertyAddress>> SearchByPostcode(string postcode, string repairType) => throw new System.NotImplementedException();
     }
 }

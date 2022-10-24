@@ -6,23 +6,33 @@ using HousingManagementSystemApi.Gateways;
 
 namespace HousingManagementSystemApi.UseCases
 {
+    using Helpers;
+
     public class RetrieveAddressesUseCase : IRetrieveAddressesUseCase
     {
         private readonly IAddressesGateway addressesGateway;
+        private readonly IContainerResolver containerResolver;
 
         public RetrieveAddressesUseCase(IAddressesGateway addressesGateway)
         {
             this.addressesGateway = addressesGateway;
         }
 
-        public async Task<IEnumerable<PropertyAddress>> Execute(string postcode)
+        public async Task<IEnumerable<PropertyAddress>> Execute(string postcode, string repairType)
         {
             if (postcode == null)
                 throw new ArgumentNullException(nameof(postcode));
 
             if (postcode == "")
                 return new List<PropertyAddress>();
-            var result = await addressesGateway.SearchByPostcode(postcode);
+
+            if (repairType == null)
+                throw new ArgumentNullException(nameof(repairType));
+
+            if (repairType == "")
+                throw new ArgumentException("Repair type must be a valid value");
+                
+            var result = await addressesGateway.SearchByPostcode(postcode, repairType);
             return result;
         }
     }
