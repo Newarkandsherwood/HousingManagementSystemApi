@@ -34,5 +34,7 @@ namespace HousingManagementSystemApi.Gateways
 
             return data;
         }
+
+        public Task<IEnumerable<PropertyAddress>> SearchByPostcode(string postcode, string repairType) => throw new System.NotImplementedException();
     }
 }

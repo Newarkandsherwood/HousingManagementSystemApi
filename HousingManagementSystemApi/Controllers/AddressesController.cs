@@ -18,11 +18,28 @@ namespace HousingManagementSystemApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Address([FromQuery] string postcode)
+        [Route("TenantAddresses")]
+        public async Task<IActionResult> TenantAddresses([FromQuery] string postcode)
         {
             try
             {
-                var result = await retrieveAddressesUseCase.Execute(postcode);
+                var result = await retrieveAddressesUseCase.Execute(postcode, "TENANT");
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                SentrySdk.CaptureException(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("CommunalAddresses")]
+        public async Task<IActionResult> CommunalAddresses([FromQuery] string postcode)
+        {
+            try
+            {
+                var result = await retrieveAddressesUseCase.Execute(postcode, "COMMUNAL");
                 return Ok(result);
             }
             catch (Exception e)
