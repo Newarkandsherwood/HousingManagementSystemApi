@@ -20,12 +20,14 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         private Mock<IContainerResolver> containerResolverMock;
         private Mock<FeedIterator<PropertyAddress>> feedIteratorMock;
         private readonly Mock<ICosmosAddressQueryHelper> cosmosQueryHelperMock;
+        private readonly Mock<Container> containerMock;
 
         private const string MockPostcode = "NG21 9LQ";
         private const string MockRepairType = "TENANT";
 
         public AddressesCosmosGatewayCosmosQueryHelperTests()
         {
+            containerMock = new Mock<Container>();
             containerResolverMock = new Mock<IContainerResolver>();
             systemUnderTest = new AddressesCosmosGateway(containerResolverMock.Object);
             cosmosQueryHelperMock = new Mock<ICosmosAddressQueryHelper>();
@@ -39,7 +41,14 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         {
             // Arrange
             feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
+            containerResolverMock.Setup(x => x.Resolve(It.IsAny<string>())).Returns(containerMock.Object);
             cosmosQueryHelperMock.Setup(_ => _.GetItemQueryIterator<PropertyAddress>(MockPostcode))
+                .Returns(feedIteratorMock.Object);
+            containerMock
+                .Setup(c => c.GetItemQueryIterator<PropertyAddress>(
+                    It.IsAny<QueryDefinition>(),
+                    It.IsAny<string>(),
+                    It.IsAny<QueryRequestOptions>()))
                 .Returns(feedIteratorMock.Object);
 
             // Act
@@ -56,7 +65,14 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         {
             // Arrange
             feedIteratorMock.Setup(_ => _.HasMoreResults).Returns(false);
+            containerResolverMock.Setup(x => x.Resolve(It.IsAny<string>())).Returns(containerMock.Object);
             cosmosQueryHelperMock.Setup(_ => _.GetItemQueryIterator<PropertyAddress>(MockPostcode))
+                .Returns(feedIteratorMock.Object);
+            containerMock
+                .Setup(c => c.GetItemQueryIterator<PropertyAddress>(
+                    It.IsAny<QueryDefinition>(),
+                    It.IsAny<string>(),
+                    It.IsAny<QueryRequestOptions>()))
                 .Returns(feedIteratorMock.Object);
 
             // Act
@@ -77,6 +93,8 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             var feedResponseMock = new Mock<FeedResponse<PropertyAddress>>();
             feedResponseMock.Setup(x => x.GetEnumerator()).Returns(addressList.GetEnumerator());
 
+            containerResolverMock.Setup(x => x.Resolve(It.IsAny<string>())).Returns(containerMock.Object);
+
             feedIteratorMock
                 .Setup(f => f.ReadNextAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(feedResponseMock.Object)
@@ -84,15 +102,15 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
                     .Setup(f => f.HasMoreResults)
                     .Returns(false));
 
-            var containerMock = new Mock<Container>();
+            cosmosQueryHelperMock.Setup(x => x.GetItemQueryIterator<PropertyAddress>(MockPostcode))
+                .Returns(feedIteratorMock.Object);
+
+            // var containerMock = new Mock<Container>();
             containerMock
                 .Setup(c => c.GetItemQueryIterator<PropertyAddress>(
                     It.IsAny<QueryDefinition>(),
                     It.IsAny<string>(),
                     It.IsAny<QueryRequestOptions>()))
-                .Returns(feedIteratorMock.Object);
-
-            cosmosQueryHelperMock.Setup(_ => _.GetItemQueryIterator<PropertyAddress>(MockPostcode))
                 .Returns(feedIteratorMock.Object);
 
             // Act
