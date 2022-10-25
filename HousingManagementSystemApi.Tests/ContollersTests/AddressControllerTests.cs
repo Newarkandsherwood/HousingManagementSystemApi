@@ -39,7 +39,7 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         {
             var dummyList = new List<PropertyAddress> { new() { PostalCode = this.postcode } };
             retrieveAddressesUseCaseMock
-                .Setup(x => x.Execute(this.postcode,  RepairType.Communal))
+                .Setup(x => x.Execute(this.postcode, RepairType.Communal))
                 .ReturnsAsync(dummyList);
         }
 
@@ -49,7 +49,7 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
             SetupTenantDummyAddresses();
 
             var result = await systemUnderTest.TenantAddresses(this.postcode);
-            retrieveAddressesUseCaseMock.Verify(x => x.Execute(this.postcode,  RepairType.Tenant), Times.Once);
+            retrieveAddressesUseCaseMock.Verify(x => x.Execute(this.postcode, RepairType.Tenant), Times.Once);
             GetStatusCode(result).Should().Be(200);
         }
 

@@ -10,7 +10,7 @@ using ServiceCollectionExtensions = Helpers.ServiceCollectionExtensions;
 
 public class ServiceCollectionExtensionsTests
 {
-    [Fact (Skip = "Need to figure out how to stub the return value of the GetCosmosClientContainer method or similar as it's trying to create a CosmosDB Client during the test")]
+    [Fact(Skip = "Need to figure out how to stub the return value of the GetCosmosClientContainer method or similar as it's trying to create a CosmosDB Client during the test")]
     public void GivenValidRepairTypes_WhenAddingCosmosAddressContainersToServices_ThenContainerResolverIsRegistered()
     {
         var serviceCollectionMock = new Mock<IServiceCollection>();
@@ -31,7 +31,7 @@ public class ServiceCollectionExtensionsTests
             .Returns(containerMock.Object);
 
         // Act
-        ServiceCollectionExtensions.AddCosmosAddressContainers(serviceCollection, new []{testRepairType} );
+        ServiceCollectionExtensions.AddCosmosAddressContainers(serviceCollection, new[] { testRepairType });
 
         // Assert
         serviceCollectionMock.VerifyAll();
