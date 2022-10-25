@@ -12,5 +12,5 @@ public static class RepairType
 
     public static readonly IEnumerable<string> All = new[] { Tenant, Communal };
 
-    public static Func<string, bool> IsValidValue = repairType => All.Contains(repairType);
+    public static readonly Func<string, bool> IsValidValue = repairType => All.Contains(repairType);
 }
