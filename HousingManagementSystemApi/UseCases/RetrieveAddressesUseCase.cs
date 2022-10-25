@@ -6,12 +6,9 @@ using HousingManagementSystemApi.Gateways;
 
 namespace HousingManagementSystemApi.UseCases
 {
-    using Helpers;
-
     public class RetrieveAddressesUseCase : IRetrieveAddressesUseCase
     {
         private readonly IAddressesGateway addressesGateway;
-        private readonly IContainerResolver containerResolver;
 
         public RetrieveAddressesUseCase(IAddressesGateway addressesGateway)
         {
