@@ -21,7 +21,7 @@ namespace HousingManagementSystemApi.Tests.ContollersTests
         public AddressControllerTests()
         {
             postcode = "postcode";
-            repairType = "repairType";
+            repairType = "TENANT";
 
             retrieveAddressesUseCaseMock = new Mock<IRetrieveAddressesUseCase>();
             systemUnderTest = new AddressesController(retrieveAddressesUseCaseMock.Object);

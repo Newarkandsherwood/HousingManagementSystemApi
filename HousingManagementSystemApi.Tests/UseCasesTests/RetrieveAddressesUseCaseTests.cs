@@ -27,9 +27,9 @@ namespace HousingManagementSystemApi.Tests
         {
             const string TestPostcode = "postcode";
             const string TestRepairType = "TENANT";
-            retrieveAddressesGateway.Setup(x => x.SearchByPostcode(TestPostcode));
+            retrieveAddressesGateway.Setup(x => x.SearchByPostcode(TestPostcode, TestRepairType));
             await retrieveAddressesUseCase.Execute(TestPostcode, TestRepairType);
-            retrieveAddressesGateway.Verify(x => x.SearchByPostcode(TestPostcode), Times.Once);
+            retrieveAddressesGateway.Verify(x => x.SearchByPostcode(TestPostcode, TestRepairType), Times.Once);
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace HousingManagementSystemApi.Tests
         {
             const string TestPostcode = "postcode";
             const string TestRepairType = "TENANT";
-            retrieveAddressesGateway.Setup(x => x.SearchByPostcode(TestPostcode))
+            retrieveAddressesGateway.Setup(x => x.SearchByPostcode(TestPostcode, TestRepairType))
                 .ReturnsAsync(new PropertyAddress[] { new() { PostalCode = TestPostcode } });
             var result = await retrieveAddressesUseCase.Execute(TestPostcode, TestRepairType);
             result.First().PostalCode.Should().Be(TestPostcode);
