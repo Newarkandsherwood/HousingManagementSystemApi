@@ -2,7 +2,7 @@ namespace HousingManagementSystemApi.Helpers;
 
 using System.Collections.Generic;
 using System.Linq;
-using Ardalis.GuardClauses;
+// using Ardalis.GuardClauses;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,8 +17,6 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<IDictionary<string, Container>>(_ => cosmosAddressContainers);
         services.AddTransient<IContainerResolver, ContainerResolver>();
-        
-        // services.AddTransient<ICosmosAddressQueryHelper, CosmosAddressQueryHelper>(_ => new CosmosAddressQueryHelper(cosmosAddressContainers);
     }
 
     private static Container GetCosmosClientContainer(string repairType)

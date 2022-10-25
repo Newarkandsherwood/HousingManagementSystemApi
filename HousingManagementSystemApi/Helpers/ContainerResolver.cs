@@ -11,15 +11,15 @@ public class ContainerResolver : IContainerResolver
 
     public ContainerResolver(IDictionary<string, Container> cosmosAddressContainers)
     {
-        // Guard.Against.Null(cosmosAddressContainers, nameof(cosmosAddressContainers));
+        Guard.Against.Null(cosmosAddressContainers, nameof(cosmosAddressContainers));
 
         this.cosmosAddressContainers = cosmosAddressContainers;
     }
 
     public Container Resolve(string repairType)
     {
-        // Guard.Against.NullOrWhiteSpace(repairType, nameof(repairType));
-        // Guard.Against.InvalidInput(repairType, nameof(repairType), RepairType.IsValidValue);
+        Guard.Against.NullOrWhiteSpace(repairType, nameof(repairType));
+        Guard.Against.InvalidInput(repairType, nameof(repairType), RepairType.IsValidValue);
 
         if (!cosmosAddressContainers.TryGetValue(repairType, out var result))
         {

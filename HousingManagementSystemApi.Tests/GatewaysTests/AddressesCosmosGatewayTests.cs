@@ -43,7 +43,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
 
         [Fact]
 #pragma warning disable CA1707
-        public async void Test_Get_addresses_Not_Throws_Exception()
+        public async void Test_Does_Not_Throws_Exception_When_Iterator_Returns_No_Results()
 #pragma warning restore CA1707
         {
             // Arrange
@@ -67,7 +67,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
 
         [Fact]
 #pragma warning disable CA1707
-        public async void Test_No_Addresses_Returned_When_Iterator_No_Results()
+        public async void Test_No_Addresses_Are_Returned_When_Iterator_Returns_No_Results()
 #pragma warning restore CA1707
         {
             // Arrange
@@ -91,7 +91,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
 
         [Fact]
 #pragma warning disable CA1707
-        public async void Test_Tenant_Addresses_Returned_When_Iterator_Returns_Results()
+        public async void Test_Tenant_Addresses_Are_Returned_When_Repair_Type_Is_Tenant()
 #pragma warning restore CA1707
         {
             // Arrange
@@ -112,7 +112,6 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             cosmosQueryHelperMock.Setup(x => x.GetItemQueryIterator<PropertyAddress>(MockPostcode))
                 .Returns(feedIteratorMock.Object);
 
-            // var containerMock = new Mock<Container>();
             tenantContainerMock
                 .Setup(c => c.GetItemQueryIterator<PropertyAddress>(
                     It.IsAny<QueryDefinition>(),
@@ -124,13 +123,12 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             var results = await systemUnderTest.SearchByPostcode(MockPostcode, MockTenantRepairType);
 
             // Assert
-            // Assert.Single(results);
             Assert.Equal(TenantAddress, results.FirstOrDefault().BuildingName);
         }
 
         [Fact]
 #pragma warning disable CA1707
-        public async void Test_Communal_Addresses_Returned_When_Iterator_Returns_Results()
+        public async void Test_Communal_Addresses_Are_Returned_When_Repair_Type_Is_Communal()
 #pragma warning restore CA1707
         {
             // Arrange
@@ -151,7 +149,6 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             cosmosQueryHelperMock.Setup(x => x.GetItemQueryIterator<PropertyAddress>(MockPostcode))
                 .Returns(feedIteratorMock.Object);
 
-            // var containerMock = new Mock<Container>();
             communalContainerMock
                 .Setup(c => c.GetItemQueryIterator<PropertyAddress>(
                     It.IsAny<QueryDefinition>(),
@@ -163,7 +160,6 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             var results = await systemUnderTest.SearchByPostcode(MockPostcode, MockCommunalRepairType);
 
             // Assert
-            // Assert.Single(results);
             Assert.Equal(CommunalAddress, results.FirstOrDefault().BuildingName);
         }
     }

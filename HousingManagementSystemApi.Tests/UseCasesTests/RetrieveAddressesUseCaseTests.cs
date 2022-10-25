@@ -19,11 +19,10 @@ namespace HousingManagementSystemApi.Tests
         {
             retrieveAddressesGateway = new Mock<IAddressesGateway>();
             retrieveAddressesUseCase = new RetrieveAddressesUseCase(retrieveAddressesGateway.Object);
-
         }
 
         [Fact]
-        public async Task GivenAPostcode_WhenExecute_GatewayReceivesCorrectInput()
+        public async Task GivenAPostcodeAndRepairType_WhenExecute_GatewayReceivesCorrectInput()
         {
             const string TestPostcode = "postcode";
             const string TestRepairType = "TENANT";
@@ -33,7 +32,7 @@ namespace HousingManagementSystemApi.Tests
         }
 
         [Fact]
-        public async Task GivenAPostcode_WhenAnAddressExists_GatewayReturnsCorrectData()
+        public async Task GivenAPostcodeAndRepairType_WhenAnAddressExists_GatewayReturnsCorrectData()
         {
             const string TestPostcode = "postcode";
             const string TestRepairType = "TENANT";
@@ -57,6 +56,22 @@ namespace HousingManagementSystemApi.Tests
             const string TestRepairType = "TENANT";
             await retrieveAddressesUseCase.Execute(postcode: TestPostcode, repairType: TestRepairType);
             retrieveAddressesGateway.Verify(x => x.SearchByPostcode(TestPostcode), Times.Never);
+        }
+
+        [Fact]
+        public async void GivenNullRepairType_WhenExecute_ThrowsNullException()
+        {
+            const string TestPostcode = "postcode";
+            Func<Task> act = async () => await retrieveAddressesUseCase.Execute(TestPostcode, null);
+            await act.Should().ThrowAsync<ArgumentNullException>();
+        }
+
+        [Fact]
+        public async void GivenEmptyRepairType_WhenExecute_SearchByPostcodeIsNotCalled()
+        {
+            const string TestPostcode = "postcode";
+            Func<Task> act = async () => await retrieveAddressesUseCase.Execute(TestPostcode, "");
+            await act.Should().ThrowAsync<ArgumentException>().WithMessage("Repair type must be a valid value");
         }
     }
 
