@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HousingManagementSystemApi.Controllers
 {
     using System;
+    using Helpers;
     using Sentry;
     using UseCases;
 
@@ -23,7 +24,7 @@ namespace HousingManagementSystemApi.Controllers
         {
             try
             {
-                var result = await retrieveAddressesUseCase.Execute(postcode, "TENANT");
+                var result = await retrieveAddressesUseCase.Execute(postcode, RepairType.Tenant);
                 return Ok(result);
             }
             catch (Exception e)
@@ -39,7 +40,7 @@ namespace HousingManagementSystemApi.Controllers
         {
             try
             {
-                var result = await retrieveAddressesUseCase.Execute(postcode, "COMMUNAL");
+                var result = await retrieveAddressesUseCase.Execute(postcode, RepairType.Communal);
                 return Ok(result);
             }
             catch (Exception e)

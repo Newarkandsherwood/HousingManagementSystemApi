@@ -31,7 +31,7 @@ namespace HousingManagementSystemApi.UseCases
 
             if (repairType == "")
                 throw new ArgumentException("Repair type must be a valid value");
-                
+
             var result = await addressesGateway.SearchByPostcode(postcode, repairType);
             return result;
         }
