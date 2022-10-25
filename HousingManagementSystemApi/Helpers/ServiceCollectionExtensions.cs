@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
         // Guard.Against.NullOrWhiteSpace(repairType, nameof(repairType));
         // Guard.Against.InvalidInput(repairType, nameof(repairType), RepairType.IsValidValue);
 
-        var cosmosAddressContainers = repairType.ToDictionary( x => x, GetCosmosClientContainer);
+        var cosmosAddressContainers = repairType.ToDictionary(x => x, GetCosmosClientContainer);
 
         services.AddTransient<IDictionary<string, Container>>(_ => cosmosAddressContainers);
         services.AddTransient<IContainerResolver, ContainerResolver>();
