@@ -62,6 +62,16 @@ variable "cosmos_tenant_container_id" {
   sensitive = true
 }
 
+variable "cosmos_communal_staging_container_id" {
+  type      = string
+  sensitive = true
+}
+
+variable "cosmos_communal_production_container_id" {
+  type      = string
+  sensitive = true
+}
+
 variable "cosmos_endpoint_url" {
   type      = string
   sensitive = true
