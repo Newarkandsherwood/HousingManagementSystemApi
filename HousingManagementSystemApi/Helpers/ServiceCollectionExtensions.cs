@@ -2,18 +2,21 @@ namespace HousingManagementSystemApi.Helpers;
 
 using System.Collections.Generic;
 using System.Linq;
-// using Ardalis.GuardClauses;
+using Ardalis.GuardClauses;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddCosmosAddressContainers(this IServiceCollection services, IEnumerable<string> repairType)
+    public static void AddCosmosAddressContainers(this IServiceCollection services, IEnumerable<string> repairTypes)
     {
-        // Guard.Against.NullOrWhiteSpace(repairType, nameof(repairType));
-        // Guard.Against.InvalidInput(repairType, nameof(repairType), RepairType.IsValidValue);
+        foreach (var repairType in repairTypes)
+        {
+            Guard.Against.NullOrWhiteSpace(repairType, nameof(repairType));
+            Guard.Against.InvalidInput(repairType, nameof(repairType), RepairType.IsValidValue);
+        }
 
-        var cosmosAddressContainers = repairType.ToDictionary(x => x, GetCosmosClientContainer);
+        var cosmosAddressContainers = repairTypes.ToDictionary(x => x, GetCosmosClientContainer);
 
         services.AddTransient<IDictionary<string, Container>>(_ => cosmosAddressContainers);
         services.AddTransient<IContainerResolver, ContainerResolver>();

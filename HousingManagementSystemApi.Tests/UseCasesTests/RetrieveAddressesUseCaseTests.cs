@@ -71,7 +71,7 @@ namespace HousingManagementSystemApi.Tests
         {
             const string TestPostcode = "postcode";
             Func<Task> act = async () => await retrieveAddressesUseCase.Execute(TestPostcode, "");
-            await act.Should().ThrowAsync<ArgumentException>().WithMessage("Repair type must be a valid value");
+            await act.Should().ThrowAsync<ArgumentException>();
         }
     }
 

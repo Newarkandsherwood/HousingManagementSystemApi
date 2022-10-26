@@ -18,7 +18,6 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         private readonly AddressesController systemUnderTest;
         private readonly Mock<IRetrieveAddressesUseCase> retrieveAddressesUseCaseMock;
         private readonly string postcode;
-        private readonly string tenantRepairType;
 
         public AddressControllerTests()
         {
