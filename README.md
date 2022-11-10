@@ -17,13 +17,12 @@ The following environment variables should be set up in Properties/launchSetting
         "UNIVERSAL_HOUSING_CONNECTION_STRING": "<REPLACE WITH A CONNECTION STRING TO UNIVERSAL HOUSING>",
         "SENTRY_DSN": "<REPLACE WITH SENTRY_DSN>",
         "COSMOS_TENANT_CONTAINER_ID": "<REPLACE WITH COSMOS_TENANT_CONTAINER_ID>",
+        "COSMOS_COMMUNAL_CONTAINER_ID": "<REPLACE WITH COSMOS_COMMUNAL_CONTAINER_ID>",
         "COSMOS_AUTHORIZATION_KEY": "<REPLACE WITH COSMOS_AUTHORIZATION_KEY>",
         "COSMOS_DATABASE_ID": "<REPLACE WITH COSMOS_DATABASE_ID>",
 ```
 
-`COSMOS_TENANT_CONTAINER_ID`,
-`COSMOS_AUTHORIZATION_KEY` and 
-`COSMOS_DATABASE_ID` are used to access the address information from Azure CosmosDB. Ensure these values are populated from the correct values taken from the Azure dashboard.
+Settings starting with `COSMOS_*` are used to access the address information from Azure CosmosDB. Ensure these values are populated from the correct values taken from the Azure dashboard.
 
 ## Running the API locally with other Services
 In order to run the API locally, the following steps may need to be taken to exclude some functionality.
