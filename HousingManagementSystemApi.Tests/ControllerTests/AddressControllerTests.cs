@@ -44,6 +44,11 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
             SetupDummyAddresses(RepairType.Communal);
         }
 
+        private void SetupLeaseholdDummyAddresses()
+        {
+            SetupDummyAddresses(RepairType.Leasehold);
+        }
+
         [Fact]
         public async Task GivenAPostcode_WhenAValidRequestForTenantAddressesIsMade_ItReturnsASuccessfulResponse()
         {
@@ -132,6 +137,52 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
 
             // Act
             var result = await systemUnderTest.CommunalAddresses(postcode);
+            // Assert
+            GetResultData<string>(result).Should().Be(errorMessage);
+        }
+
+        [Fact]
+        public async Task GivenAPostcode_WhenAValidRequestForLeaseholdAddressesIsMade_ItReturnsASuccessfulResponse()
+        {
+            SetupLeaseholdDummyAddresses();
+
+            var result = await systemUnderTest.LeaseholdAddresses(this.postcode);
+            retrieveAddressesUseCaseMock.Verify(x => x.Execute(this.postcode, RepairType.Leasehold), Times.Once);
+            GetStatusCode(result).Should().Be(200);
+        }
+
+        [Fact]
+        public async Task GivenAPostcode_WhenAValidRequestForLeaseholdAddressesIsMade_ItReturnsCorrectData()
+        {
+            SetupLeaseholdDummyAddresses();
+
+            var result = await systemUnderTest.LeaseholdAddresses(postcode);
+            GetResultData<List<PropertyAddress>>(result).First().PostalCode.Should().Be(this.postcode);
+        }
+
+        [Fact]
+        public async Task GivenAnExceptionIsThrown_WhenRequestIsMadeForLeaseholdAddresses_ResponseHttpStatusCodeIs500()
+        {
+            // Arrange
+            retrieveAddressesUseCaseMock.Setup(x => x.Execute(It.IsAny<string>(), It.IsAny<string>()))
+                .Throws<Exception>();
+
+            // Act
+            var result = await systemUnderTest.LeaseholdAddresses(postcode);
+            // Assert
+            GetStatusCode(result).Should().Be(500);
+        }
+
+        [Fact]
+        public async Task GivenAnExceptionIsThrown_WhenRequestIsMadeForLeaseholdAddresses_ResponseHttpStatusMessageIsExceptionMessage()
+        {
+            // Arrange
+            const string errorMessage = "An error message";
+            retrieveAddressesUseCaseMock.Setup(x => x.Execute(It.IsAny<string>(), It.IsAny<string>()))
+                .Throws(new Exception(errorMessage));
+
+            // Act
+            var result = await systemUnderTest.LeaseholdAddresses(postcode);
             // Assert
             GetResultData<string>(result).Should().Be(errorMessage);
         }

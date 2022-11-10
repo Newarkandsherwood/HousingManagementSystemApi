@@ -70,6 +70,12 @@ resource "azurerm_key_vault_secret" "cosmos-communal-staging-container-id" {
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
+resource "azurerm_key_vault_secret" "cosmos-leasehold-staging-container-id" {
+  name         = "cosmos-leasehold-staging-container-id"
+  value        = var.cosmos_leasehold_staging_container_id
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
 # #---- Production secrets
 resource "azurerm_key_vault_secret" "ancm-additional-error-page-link-production" {
   name         = "ancm-additional-error-page-link-production"
@@ -92,5 +98,11 @@ resource "azurerm_key_vault_secret" "jwt-secret-production" {
 resource "azurerm_key_vault_secret" "cosmos-communal-production-container-id" {
   name         = "cosmos-communal-production-container-id"
   value        = var.cosmos_communal_production_container_id
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "cosmos-leasehold-production-container-id" {
+  name         = "cosmos-leasehold-production-container-id"
+  value        = var.cosmos_leasehold_production_container_id
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
