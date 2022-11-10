@@ -26,20 +26,22 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
             systemUnderTest = new AddressesController(retrieveAddressesUseCaseMock.Object);
         }
 
-        private void SetupTenantDummyAddresses()
+        private void SetupDummyAddresses(string repairType)
         {
             var dummyList = new List<PropertyAddress> { new() { PostalCode = this.postcode } };
             retrieveAddressesUseCaseMock
-                .Setup(x => x.Execute(this.postcode, RepairType.Tenant))
+                .Setup(x => x.Execute(this.postcode, repairType))
                 .ReturnsAsync(dummyList);
+        }
+
+        private void SetupTenantDummyAddresses()
+        {
+            SetupDummyAddresses(RepairType.Tenant);
         }
 
         private void SetupCommunalDummyAddresses()
         {
-            var dummyList = new List<PropertyAddress> { new() { PostalCode = this.postcode } };
-            retrieveAddressesUseCaseMock
-                .Setup(x => x.Execute(this.postcode, RepairType.Communal))
-                .ReturnsAsync(dummyList);
+            SetupDummyAddresses(RepairType.Communal);
         }
 
         [Fact]
