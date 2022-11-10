@@ -109,6 +109,8 @@ jobs:
           echo "cosmos_tenant_container_id                        = \"${{ secrets.COSMOS_TENANT_CONTAINER_ID }}\"" >> env.tfvars
           echo "cosmos_communal_staging_container_id              = \"${{ secrets.COSMOS_COMMUNAL_STAGING_CONTAINER_ID }}\"" >> env.tfvars
           echo "cosmos_communal_production_container_id           = \"${{ secrets.COSMOS_COMMUNAL_PRODUCTION_CONTAINER_ID }}\"" >> env.tfvars
+          echo "cosmos_leasehold_staging_container_id             = \"${{ secrets.COSMOS_LEASEHOLD_STAGING_CONTAINER_ID }}\"" >> env.tfvars
+          echo "cosmos_leasehold_production_container_id          = \"${{ secrets.COSMOS_LEASEHOLD_PRODUCTION_CONTAINER_ID }}\"" >> env.tfvars
           echo "cosmos_endpoint_url                               = \"${{ secrets.COSMOS_ENDPOINT_URL }}\"" >> env.tfvars
           echo "cosmos_authorization_key                          = \"${{ secrets.COSMOS_AUTHORIZATION_KEY }}\"" >> env.tfvars
 
@@ -142,6 +144,7 @@ jobs:
           echo "::add-mask::${{ secrets.COSMOS_DATABASE_ID }}"
           echo "::add-mask::${{ secrets.COSMOS_TENANT_CONTAINER_ID }}"
           echo "::add-mask::${{ secrets.COSMOS_COMMUNAL_STAGING_CONTAINER_ID }}"
+          echo "::add-mask::${{ secrets.COSMOS_LEASEHOLD_STAGING_CONTAINER_ID }}"
           echo "::add-mask::${{ secrets.COSMOS_ENDPOINT_URL }}"
           echo "::add-mask::${{ secrets.COSMOS_AUTHORIZATION_KEY }}"
         
@@ -177,6 +180,7 @@ jobs:
           echo "::add-mask::${{ secrets.COSMOS_DATABASE_ID }}"
           echo "::add-mask::${{ secrets.COSMOS_TENANT_CONTAINER_ID }}"
           echo "::add-mask::${{ secrets.COSMOS_COMMUNAL_PRODUCTION_CONTAINER_ID }}"
+          echo "::add-mask::${{ secrets.COSMOS_LEASEHOLD_PRODUCTION_CONTAINER_ID }}"
           echo "::add-mask::${{ secrets.COSMOS_ENDPOINT_URL }}"
           echo "::add-mask::${{ secrets.COSMOS_AUTHORIZATION_KEY }}"
 

@@ -49,5 +49,21 @@ namespace HousingManagementSystemApi.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        [HttpGet]
+        [Route("LeaseholdAddresses")]
+        public async Task<IActionResult> LeaseholdAddresses([FromQuery] string postcode)
+        {
+            try
+            {
+                var result = await retrieveAddressesUseCase.Execute(postcode, RepairType.Leasehold);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                SentrySdk.CaptureException(e);
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }

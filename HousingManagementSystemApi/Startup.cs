@@ -41,11 +41,7 @@ namespace HousingManagementSystemApi
             services.AddTransient<IAddressesGateway, AddressesCosmosGateway>();
 
             // services.AddTransient<ICosmosAddressQueryHelper, CosmosAddressQueryHelper>();
-            services.AddCosmosAddressContainers(new[]
-            {
-                RepairType.Tenant,
-                RepairType.Communal
-            });
+            services.AddCosmosAddressContainers(RepairType.All);
 
             services.AddSwaggerGen(c =>
             {

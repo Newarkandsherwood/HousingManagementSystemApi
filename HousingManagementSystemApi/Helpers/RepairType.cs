@@ -10,7 +10,9 @@ public static class RepairType
 
     public const string Communal = "COMMUNAL";
 
-    public static readonly IEnumerable<string> All = new[] { Tenant, Communal };
+    public const string Leasehold = "LEASEHOLD";
+
+    public static readonly IEnumerable<string> All = new[] { Tenant, Communal, Leasehold };
 
     public static readonly Func<string, bool> IsValidValue = repairType => All.Contains(repairType);
 }
