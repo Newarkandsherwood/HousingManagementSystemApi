@@ -16,7 +16,8 @@ public static class CapitaGatewayHelper
         string description) =>
         new()
         {
-            RequestType = "logjob", Parameters = new List<Parameters>
+            RequestType = "logjob",
+            Parameters = new List<Parameters>
             {
                 new() { Attribute = "place_ref", AttributeValue = place_ref },
                 new() { Attribute = "std_job_code", AttributeValue = std_job_code },

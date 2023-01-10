@@ -7,7 +7,7 @@ using RestSharp;
 
 namespace HousingManagementSystemApi.Gateways;
 
-public class CapitaWorkOrderGateway: IWorkOrderGateway
+public class CapitaWorkOrderGateway : IWorkOrderGateway
 {
     const string capitaUrlString = "https://test";
     const string username = "test";
@@ -24,8 +24,8 @@ public class CapitaWorkOrderGateway: IWorkOrderGateway
         Guard.Against.NullOrWhiteSpace(locationId, nameof(locationId));
         Guard.Against.NullOrWhiteSpace(sorCode, nameof(sorCode));
 
-        var restSharp = new RestClient(new HttpClient{BaseAddress = new Uri(capitaUrlString)});
-        var restRequest = new RestRequest{Method = Method.Post};
+        var restSharp = new RestClient(new HttpClient { BaseAddress = new Uri(capitaUrlString) });
+        var restRequest = new RestRequest { Method = Method.Post };
 
         var logJobRequest = CapitaGatewayHelper.CreateLogJobRequst(locationId, std_job_code, client_ref,
             source, sorCode, location, quantity, description);
