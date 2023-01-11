@@ -7,6 +7,8 @@ using RestSharp;
 
 namespace HousingManagementSystemApi.Gateways;
 
+using Models.Capita;
+
 public class CapitaWorkOrderGateway : IWorkOrderGateway
 {
     const string capitaUrlString = "https://test";
