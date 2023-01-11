@@ -39,6 +39,8 @@ namespace HousingManagementSystemApi
             // services.AddTransient<IAddressesGateway, AddressesDatabaseGateway>();
             // services.AddTransient<IAddressesGateway, DummyAddressesGateway>();
             services.AddTransient<IAddressesGateway, AddressesCosmosGateway>();
+            services.AddTransient<IWorkOrderGateway, DummyWorkOrderGateway>();
+            services.AddTransient<ICreateWorkOrderUseCase, CreateWorkOrderUseCase>();
 
             // services.AddTransient<ICosmosAddressQueryHelper, CosmosAddressQueryHelper>();
             services.AddCosmosAddressContainers(RepairType.All);
