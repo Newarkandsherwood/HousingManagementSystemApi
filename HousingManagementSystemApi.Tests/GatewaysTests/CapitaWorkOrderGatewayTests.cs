@@ -3,6 +3,9 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
     using System;
     using FluentAssertions;
     using Gateways;
+    using Helpers;
+    using Models.Capita;
+    using Moq;
     using Xunit;
 
     public class CapitaWorkOrderGatewayTests
@@ -10,10 +13,14 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         private readonly CapitaWorkOrderGateway systemUnderTest;
         private const string LocationId = "locationId";
         private const string SorCode = "SOR_CODE";
+        private LogJobRequest logJobRequest;
+        private Mock<ICapitaGatewayHelper> capitaGatewayHelperMock;
 
         public CapitaWorkOrderGatewayTests()
         {
-            systemUnderTest = new CapitaWorkOrderGateway();
+            logJobRequest = new LogJobRequest();
+            capitaGatewayHelperMock = new Mock<ICapitaGatewayHelper>();
+            systemUnderTest = new CapitaWorkOrderGateway(capitaGatewayHelperMock.Object);
         }
 
         [Theory]
@@ -58,5 +65,20 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             { new ArgumentException(), "" },
             { new ArgumentException(), " " },
         };
+        [Fact]
+        public async void GivenValidParameters_WhenCreateWorkOrder_ThenCapitaGatewayHelperCreateLogJobRequestIsCalled()
+        {
+            // Arrange
+            capitaGatewayHelperMock.Setup(helper => helper.CreateLogJobRequest(It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
+                                                                It.IsAny<string>()))
+                .Returns(this.logJobRequest);
+
+            // Act
+            await systemUnderTest.CreateWorkOrder(LocationId, SorCode);
+
+            // Assert
+            capitaGatewayHelperMock.VerifyAll();
+        }
     }
 }
