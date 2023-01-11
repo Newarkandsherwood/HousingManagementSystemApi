@@ -4,5 +4,5 @@ using System.Threading.Tasks;
 
 public interface ICreateWorkOrderUseCase
 {
-    Task<string> Execute(string locationId, string sorCode);
+    Task<string> Execute(string description, string locationId, string sorCode);
 }

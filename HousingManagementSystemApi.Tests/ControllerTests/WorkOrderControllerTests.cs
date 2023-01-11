@@ -16,6 +16,7 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         private const string LocationId = "locationId";
         private const string SorCode = "SOR_CODE";
         private const string WorkOrderId = "test";
+        private const string Description = "description";
 
         public WorkOrderControllerTests()
         {
@@ -28,11 +29,11 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         public async void GivenValidParameters_WhenCreateWorkOrder_ThenWorkOrderUseCaseExecuteIsCalled()
         {
             // Arrange
-            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(), It.IsAny<string>()))
+            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(), It.IsAny<string>(),It.IsAny<string>()))
                 .ReturnsAsync(WorkOrderId);
 
             // Act
-            await systemUnderTest.CreateWorkOrder(LocationId, SorCode);
+            await systemUnderTest.CreateWorkOrder(Description, LocationId, SorCode);
 
             // Assert
             createWorkOrderUseCaseMock.VerifyAll();
@@ -42,11 +43,11 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         public async void GivenValidParameters_WhenCreateWorkOrder_ThenWorkOrderUseCaseReturnsStatus200()
         {
             // Arrange
-            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(), It.IsAny<string>()))
+            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(),It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(WorkOrderId);
 
             // Act
-            var result = await systemUnderTest.CreateWorkOrder(LocationId, SorCode);
+            var result = await systemUnderTest.CreateWorkOrder(Description, LocationId, SorCode);
 
             // Assert
             GetStatusCode(result).Should().Be(200);
@@ -56,14 +57,14 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         public async void GivenValidParameters_WhenCreateWorkOrder_ThenWorkOrderUseCaseIsCalledWithCorrectParameters()
         {
             // Arrange
-            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(), It.IsAny<string>()))
+            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(),It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(WorkOrderId);
 
             // Act
-            await systemUnderTest.CreateWorkOrder(LocationId, SorCode);
+            await systemUnderTest.CreateWorkOrder(Description, LocationId, SorCode);
 
             // Assert
-            createWorkOrderUseCaseMock.Verify(x => x.Execute(LocationId, SorCode), Times.Once);
+            createWorkOrderUseCaseMock.Verify(x => x.Execute(Description, LocationId, SorCode), Times.Once);
         }
 
         [Fact]
@@ -71,11 +72,11 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         {
             // Arrange
             var exceptionMessage = "Exception Message";
-            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(), It.IsAny<string>()))
+            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(),It.IsAny<string>(), It.IsAny<string>()))
                 .Throws(new SystemException(exceptionMessage));
 
             // Act
-            var result = await systemUnderTest.CreateWorkOrder(LocationId, SorCode);
+            var result = await systemUnderTest.CreateWorkOrder(Description, LocationId, SorCode);
 
             // Assert
             GetStatusCode(result).Should().Be(500);

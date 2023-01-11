@@ -13,12 +13,13 @@ public class CreateWorkOrderUseCase : ICreateWorkOrderUseCase
         this.workOrderGateway = workOrderGateway;
     }
 
-    public Task<string> Execute(string locationId, string sorCode)
+    public Task<string> Execute(string description, string locationId, string sorCode)
     {
+        Guard.Against.NullOrWhiteSpace(description, nameof(description));
         Guard.Against.NullOrWhiteSpace(locationId, nameof(locationId));
         Guard.Against.NullOrWhiteSpace(sorCode, nameof(sorCode));
 
-        return workOrderGateway.CreateWorkOrder(locationId, sorCode);
+        return workOrderGateway.CreateWorkOrder(description, locationId, sorCode);
     }
 
 }
