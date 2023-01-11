@@ -1,12 +1,11 @@
 namespace HousingManagementSystemApi.Helpers;
 
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using Models.Capita;
 
-public static class CapitaGatewayHelper
+public class CapitaGatewayHelper : ICapitaGatewayHelper
 {
-    public static LogJobRequest CreateLogJobRequst(
+    public LogJobRequest CreateLogJobRequest(
         string place_ref,
         string std_job_code,
         string client_ref,

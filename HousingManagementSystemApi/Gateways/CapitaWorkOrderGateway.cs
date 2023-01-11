@@ -11,6 +11,7 @@ using Models.Capita;
 
 public class CapitaWorkOrderGateway : IWorkOrderGateway
 {
+    private readonly ICapitaGatewayHelper capitaGatewayHelper;
     const string capitaUrlString = "https://test";
     const string username = "test";
     const string password = "test";
@@ -21,6 +22,10 @@ public class CapitaWorkOrderGateway : IWorkOrderGateway
     private const string quantity = "1";
     private const string description = "Testing web services";
 
+    public CapitaWorkOrderGateway(ICapitaGatewayHelper capitaGatewayHelper)
+    {
+        this.capitaGatewayHelper = capitaGatewayHelper;
+    }
     public Task<string> CreateWorkOrder(string locationId, string sorCode)
     {
         Guard.Against.NullOrWhiteSpace(locationId, nameof(locationId));
@@ -29,7 +34,7 @@ public class CapitaWorkOrderGateway : IWorkOrderGateway
         var restSharp = new RestClient(new HttpClient { BaseAddress = new Uri(capitaUrlString) });
         var restRequest = new RestRequest { Method = Method.Post };
 
-        var logJobRequest = CapitaGatewayHelper.CreateLogJobRequst(locationId, std_job_code, client_ref,
+        var logJobRequest = capitaGatewayHelper.CreateLogJobRequest(locationId, std_job_code, client_ref,
             source, sorCode, location, quantity, description);
 
         var body = new Message
