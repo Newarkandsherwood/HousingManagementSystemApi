@@ -18,11 +18,11 @@ namespace HousingManagementSystemApi.Controllers
 
         [HttpPost]
         [Route(nameof(CreateWorkOrder))]
-        public async Task<IActionResult> CreateWorkOrder([FromQuery] string locationId, [FromQuery] string sorCode)
+        public async Task<IActionResult> CreateWorkOrder([FromBody] string description, [FromQuery] string locationId, [FromQuery] string sorCode)
         {
             try
             {
-                var result = await createWorkOrderUseCase.Execute(locationId, sorCode);
+                var result = await createWorkOrderUseCase.Execute(description, locationId, sorCode);
                 return Ok(result);
             }
             catch (Exception e)

@@ -9,8 +9,26 @@ public class DummyWorkOrderGatewayTests
 {
     private const string LocationId = "locationId";
     private const string SorCode = "SOR_CODE";
-
+    private const string Description = "Description";
     private readonly DummyWorkOrderGateway systemUnderTest = new();
+
+    [Theory]
+    [MemberData(nameof(InvalidArgumentTestData))]
+#pragma warning disable xUnit1026
+#pragma warning disable CA1707
+    public async void GivenAnInvalidDescription_WhenCreatingWorkOrder_ThenExceptionIsThrown<T>(T exception,
+        string description) where T : Exception
+#pragma warning restore CA1707
+#pragma warning restore xUnit1026
+    {
+        // Arrange
+
+        // Act
+        var act = async () => await systemUnderTest.CreateWorkOrder(description, LocationId, SorCode);
+
+        // Assert
+        await act.Should().ThrowExactlyAsync<T>();
+    }
 
     [Theory]
     [MemberData(nameof(InvalidArgumentTestData))]
@@ -24,12 +42,11 @@ public class DummyWorkOrderGatewayTests
         // Arrange
 
         // Act
-        var act = async () => await systemUnderTest.CreateWorkOrder(locationId, SorCode);
+        var act = async () => await systemUnderTest.CreateWorkOrder(Description, locationId, SorCode);
 
         // Assert
         await act.Should().ThrowExactlyAsync<T>();
     }
-
 
     [Theory]
     [MemberData(nameof(InvalidArgumentTestData))]
@@ -43,7 +60,7 @@ public class DummyWorkOrderGatewayTests
         // Arrange
 
         // Act
-        var act = async () => await systemUnderTest.CreateWorkOrder(LocationId, sorCode);
+        var act = async () => await systemUnderTest.CreateWorkOrder( Description, LocationId, sorCode);
 
         // Assert
         await act.Should().ThrowExactlyAsync<T>();
@@ -55,7 +72,7 @@ public class DummyWorkOrderGatewayTests
         // Arrange
 
         // Act
-        var workOrderId = await systemUnderTest.CreateWorkOrder(LocationId, SorCode);
+        var workOrderId = await systemUnderTest.CreateWorkOrder( Description, LocationId, SorCode);
 
         // Assert
         workOrderId.Should().NotBeNullOrWhiteSpace();
@@ -67,8 +84,8 @@ public class DummyWorkOrderGatewayTests
         // Arrange
 
         // Act
-        var workOrderId = await systemUnderTest.CreateWorkOrder(LocationId, SorCode);
-        var workOrderId2 = await systemUnderTest.CreateWorkOrder(LocationId, SorCode);
+        var workOrderId = await systemUnderTest.CreateWorkOrder(Description, LocationId, SorCode);
+        var workOrderId2 = await systemUnderTest.CreateWorkOrder(Description, LocationId, SorCode);
 
         // Assert
         workOrderId.Should().NotBe(workOrderId2);

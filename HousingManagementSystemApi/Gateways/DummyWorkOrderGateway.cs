@@ -6,8 +6,9 @@ using Ardalis.GuardClauses;
 
 public class DummyWorkOrderGateway : IWorkOrderGateway
 {
-    public Task<string> CreateWorkOrder(string locationId, string sorCode)
+    public Task<string> CreateWorkOrder(string description, string locationId, string sorCode)
     {
+        Guard.Against.NullOrWhiteSpace(description, nameof(description));
         Guard.Against.NullOrWhiteSpace(locationId, nameof(locationId));
         Guard.Against.NullOrWhiteSpace(sorCode, nameof(sorCode));
 

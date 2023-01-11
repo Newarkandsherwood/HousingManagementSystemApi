@@ -4,5 +4,5 @@ using System.Threading.Tasks;
 
 public interface IWorkOrderGateway
 {
-    Task<string> CreateWorkOrder(string locationId, string sorCode);
+    Task<string> CreateWorkOrder(string description, string locationId, string sorCode);
 }
