@@ -29,7 +29,7 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         public async void GivenValidParameters_WhenCreateWorkOrder_ThenWorkOrderUseCaseExecuteIsCalled()
         {
             // Arrange
-            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(), It.IsAny<string>(),It.IsAny<string>()))
+            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(WorkOrderId);
 
             // Act
@@ -43,7 +43,7 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         public async void GivenValidParameters_WhenCreateWorkOrder_ThenWorkOrderUseCaseReturnsStatus200()
         {
             // Arrange
-            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(),It.IsAny<string>(), It.IsAny<string>()))
+            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(WorkOrderId);
 
             // Act
@@ -57,7 +57,7 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         public async void GivenValidParameters_WhenCreateWorkOrder_ThenWorkOrderUseCaseIsCalledWithCorrectParameters()
         {
             // Arrange
-            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(),It.IsAny<string>(), It.IsAny<string>()))
+            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(WorkOrderId);
 
             // Act
@@ -72,7 +72,7 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         {
             // Arrange
             var exceptionMessage = "Exception Message";
-            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(),It.IsAny<string>(), It.IsAny<string>()))
+            createWorkOrderUseCaseMock.Setup(useCase => useCase.Execute(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Throws(new SystemException(exceptionMessage));
 
             // Act

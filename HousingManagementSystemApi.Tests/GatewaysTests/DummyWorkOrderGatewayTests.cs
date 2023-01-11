@@ -1,4 +1,4 @@
-namespace HousingManagementSystemApi.Tests.UseCasesTests;
+namespace HousingManagementSystemApi.Tests.GatewaysTests;
 
 using System;
 using FluentAssertions;
@@ -60,7 +60,7 @@ public class DummyWorkOrderGatewayTests
         // Arrange
 
         // Act
-        var act = async () => await systemUnderTest.CreateWorkOrder( Description, LocationId, sorCode);
+        var act = async () => await systemUnderTest.CreateWorkOrder(Description, LocationId, sorCode);
 
         // Assert
         await act.Should().ThrowExactlyAsync<T>();
@@ -72,7 +72,7 @@ public class DummyWorkOrderGatewayTests
         // Arrange
 
         // Act
-        var workOrderId = await systemUnderTest.CreateWorkOrder( Description, LocationId, SorCode);
+        var workOrderId = await systemUnderTest.CreateWorkOrder(Description, LocationId, SorCode);
 
         // Assert
         workOrderId.Should().NotBeNullOrWhiteSpace();
