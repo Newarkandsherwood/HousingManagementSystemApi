@@ -20,6 +20,12 @@ resource "azurerm_windows_web_app_slot" "hro-management-api-staging-slot" {
     COSMOS_LEASEHOLD_CONTAINER_ID   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-leasehold-staging-container-id.id})"
     COSMOS_ENDPOINT_URL             = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-endpoint-url.id})"
     COSMOS_AUTHORIZATION_KEY        = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-authorization-key.id})"
+    CAPITA_URL                      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-url-staging.id})"
+    CAPITA_USERNAME                 = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-username-staging.id})"
+    CAPITA_PASSWORD                 = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-password-staging.id})"
+    CAPITA_STDJOBCODE               = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-stdjobcode-staging.id})"
+    CAPITA_SOURCE                   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-source-staging.id})"
+    CAPITA_SUBLOCATION              = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-sublocation-staging.id})"
   }
 
   identity {
@@ -72,5 +78,11 @@ resource "azurerm_windows_web_app" "hro-management-api" {
     COSMOS_LEASEHOLD_CONTAINER_ID   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-leasehold-production-container-id.id})"
     COSMOS_ENDPOINT_URL             = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-endpoint-url.id})"
     COSMOS_AUTHORIZATION_KEY        = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.cosmos-authorization-key.id})"
+    CAPITA_URL                      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-url-production.id})"
+    CAPITA_USERNAME                 = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-username-production.id})"
+    CAPITA_PASSWORD                 = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-password-production.id})"
+    CAPITA_STDJOBCODE               = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-stdjobcode-production.id})"
+    CAPITA_SOURCE                   = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-source-production.id})"
+    CAPITA_SUBLOCATION              = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.capita-sublocation-production.id})"
   }
 }

@@ -90,3 +90,63 @@ variable "cosmos_authorization_key" {
   type      = string
   sensitive = true
 }
+
+variable "capita_url_staging" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_url_production" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_username_staging" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_username_production" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_password_staging" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_password_production" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_stdjobcode_staging" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_stdjobcode_production" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_source_staging" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_source_production" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_sublocation_staging" {
+  type      = string
+  sensitive = true
+}
+
+variable "capita_sublocation_production" {
+  type      = string
+  sensitive = true
+}

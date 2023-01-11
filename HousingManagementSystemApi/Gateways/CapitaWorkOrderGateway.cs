@@ -12,22 +12,28 @@ using Models.Capita;
 public class CapitaWorkOrderGateway : IWorkOrderGateway
 {
     private readonly ICapitaGatewayHelper capitaGatewayHelper;
-    const string capitaUrlString = "https://test";
-    const string username = "test";
-    const string password = "test";
-    private const string std_job_code = "WEB";
-    private const string client_ref = "abc125";
-    private const string source = "ONREP";
-    private const string location = "NA";
+    private string capitaUrlString;
+    private string username;
+    private string password;
+    private string std_job_code;
+    private string client_ref;
+    private string source;
+    private string location;
     private const string quantity = "1";
-    private const string description = "Testing web services";
 
     public CapitaWorkOrderGateway(ICapitaGatewayHelper capitaGatewayHelper)
     {
         this.capitaGatewayHelper = capitaGatewayHelper;
+        capitaUrlString = EnvironmentVariableHelper.GetEnvironmentVariable("CAPITA_URL");
+        username = EnvironmentVariableHelper.GetEnvironmentVariable("CAPITA_USERNAME");
+        password = EnvironmentVariableHelper.GetEnvironmentVariable("CAPITA_PASSWORD");
+        std_job_code = EnvironmentVariableHelper.GetEnvironmentVariable("CAPITA_STDJOBCODE");
+        source = EnvironmentVariableHelper.GetEnvironmentVariable("CAPITA_SOURCE");
+        location = EnvironmentVariableHelper.GetEnvironmentVariable("CAPITA_SUBLOCATION");
     }
-    public Task<string> CreateWorkOrder(string locationId, string sorCode)
+    public async Task<string> CreateWorkOrder(string description, string locationId, string sorCode)
     {
+        Guard.Against.NullOrWhiteSpace(description, nameof(locationId));
         Guard.Against.NullOrWhiteSpace(locationId, nameof(locationId));
         Guard.Against.NullOrWhiteSpace(sorCode, nameof(sorCode));
 
@@ -47,8 +53,8 @@ public class CapitaWorkOrderGateway : IWorkOrderGateway
         };
         restRequest.AddXmlBody(body);
 
-        var restResponse = restSharp.Post<LogJobResponse>(restRequest);
+        var restResponse = await restSharp.PostAsync<LogJobResponse>(restRequest);
 
-        return Task.FromResult(restResponse.Jobs.Job_logged.Job_no);
+        return restResponse.Jobs.Job_logged.Job_no;
     }
 }
