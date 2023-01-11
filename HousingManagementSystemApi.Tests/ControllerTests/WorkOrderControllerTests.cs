@@ -67,7 +67,7 @@ namespace HousingManagementSystemApi.Tests.ControllersTests
         }
 
         [Fact]
-        public async void WhenExceptionReturnedByWorkOrderUseCase_WhenCreateWorkOrder_ThenErrorReturned()
+        public async void GivenExceptionReturnedByWorkOrderUseCase_WhenCreateWorkOrder_ThenErrorReturned()
         {
             // Arrange
             var exceptionMessage = "Exception Message";
