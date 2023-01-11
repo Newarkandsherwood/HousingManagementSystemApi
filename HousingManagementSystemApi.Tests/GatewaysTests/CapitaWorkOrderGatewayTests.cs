@@ -13,6 +13,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         private readonly CapitaWorkOrderGateway systemUnderTest;
         private const string LocationId = "locationId";
         private const string SorCode = "SOR_CODE";
+        private const string Description = "SOR_CODE";
         private LogJobRequest logJobRequest;
         private Mock<ICapitaGatewayHelper> capitaGatewayHelperMock;
 
@@ -27,6 +28,24 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         [MemberData(nameof(InvalidArgumentTestData))]
 #pragma warning disable xUnit1026
 #pragma warning disable CA1707
+        public async void GivenAnInvalidDescription_WhenCreatingWorkOrder_ThenExceptionIsThrown<T>(T exception,
+            string description) where T : Exception
+#pragma warning restore CA1707
+#pragma warning restore xUnit1026
+        {
+            // Arrange
+
+            // Act
+            var act = async () => await systemUnderTest.CreateWorkOrder(description, LocationId, SorCode);
+
+            // Assert
+            await act.Should().ThrowExactlyAsync<T>();
+        }
+
+        [Theory]
+        [MemberData(nameof(InvalidArgumentTestData))]
+#pragma warning disable xUnit1026
+#pragma warning disable CA1707
         public async void GivenAnInvalidLocationId_WhenCreatingWorkOrder_ThenExceptionIsThrown<T>(T exception,
             string locationId) where T : Exception
 #pragma warning restore CA1707
@@ -35,7 +54,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             // Arrange
 
             // Act
-            var act = async () => await systemUnderTest.CreateWorkOrder(locationId, SorCode);
+            var act = async () => await systemUnderTest.CreateWorkOrder(Description, locationId, SorCode);
 
             // Assert
             await act.Should().ThrowExactlyAsync<T>();
@@ -53,7 +72,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             // Arrange
 
             // Act
-            var act = async () => await systemUnderTest.CreateWorkOrder(LocationId, sorCode);
+            var act = async () => await systemUnderTest.CreateWorkOrder(Description, LocationId, sorCode);
 
             // Assert
             await act.Should().ThrowExactlyAsync<T>();
@@ -75,7 +94,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
                 .Returns(this.logJobRequest);
 
             // Act
-            await systemUnderTest.CreateWorkOrder(LocationId, SorCode);
+            await systemUnderTest.CreateWorkOrder(Description, LocationId, SorCode);
 
             // Assert
             capitaGatewayHelperMock.VerifyAll();

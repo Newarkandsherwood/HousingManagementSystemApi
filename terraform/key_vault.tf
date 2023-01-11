@@ -76,6 +76,42 @@ resource "azurerm_key_vault_secret" "cosmos-leasehold-staging-container-id" {
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
+resource "azurerm_key_vault_secret" "capita-url-staging" {
+    name         = "capita-url-staging"
+    value        = var.capita_url_staging
+    key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-username-staging" {
+  name         = "capita-username-staging"
+  value        = var.capita_username_staging
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-password-staging" {
+  name         = "capita-password-staging"
+  value        = var.capita_password_staging
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-stdjobcode-staging" {
+  name         = "capita-stdjobcode-staging"
+  value        = var.capita_stdjobcode_staging
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-source-staging" {
+  name         = "capita-source-staging"
+  value        = var.capita_source_staging
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-sublocation-staging" {
+  name         = "capita-sublocation-staging"
+  value        = var.capita_sublocation_staging
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
 # #---- Production secrets
 resource "azurerm_key_vault_secret" "ancm-additional-error-page-link-production" {
   name         = "ancm-additional-error-page-link-production"
@@ -104,5 +140,41 @@ resource "azurerm_key_vault_secret" "cosmos-communal-production-container-id" {
 resource "azurerm_key_vault_secret" "cosmos-leasehold-production-container-id" {
   name         = "cosmos-leasehold-production-container-id"
   value        = var.cosmos_leasehold_production_container_id
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-url-production" {
+  name         = "capita-url-production"
+  value        = var.capita_url_production
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-username-production" {
+  name         = "capita-username-production"
+  value        = var.capita_username_production
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-password-production" {
+  name         = "capita-password-production"
+  value        = var.capita_password_production
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-stdjobcode-production" {
+  name         = "capita-stdjobcode-production"
+  value        = var.capita_stdjobcode_production
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-source-production" {
+  name         = "capita-source-production"
+  value        = var.capita_source_production
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+}
+
+resource "azurerm_key_vault_secret" "capita-sublocation-production" {
+  name         = "capita-sublocation-production"
+  value        = var.capita_sublocation_production
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }

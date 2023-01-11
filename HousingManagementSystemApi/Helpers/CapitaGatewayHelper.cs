@@ -23,6 +23,7 @@ public class CapitaGatewayHelper : ICapitaGatewayHelper
                 new() { Attribute = "std_job_code", AttributeValue = std_job_code },
                 new() { Attribute = "client_ref", AttributeValue = client_ref },
                 new() { Attribute = "source", AttributeValue = source },
+                new() { Attribute = "description", AttributeValue = description },
             },
             Lines = new Lines
             {
@@ -33,7 +34,6 @@ public class CapitaGatewayHelper : ICapitaGatewayHelper
                         new() { Attribute = "sor", AttributeValue = sor},
                         new() { Attribute = "location", AttributeValue = location },
                         new() { Attribute = "quantity", AttributeValue = quantity },
-                        new() { Attribute = "description", AttributeValue = description },
                     }
                 }
             }
