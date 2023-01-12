@@ -11,6 +11,8 @@ namespace HousingManagementSystemApi
     using Gateways;
     using Helpers;
     using HousingRepairsOnline.Authentication.DependencyInjection;
+    using Microsoft.Extensions.Options;
+    using RestSharp;
     using Services;
     using UseCases;
 
@@ -37,12 +39,19 @@ namespace HousingManagementSystemApi
             // services.AddTransient<IAddressesRepository, UniversalHousingAddressesRepository>(_ =>
             //     new UniversalHousingAddressesRepository(() => new SqlConnection(connectionString)));
             ConfigureOptions(services);
+            services.AddTransient(sp =>
+            {
+                var capitaOptions = sp.GetRequiredService<IOptions<CapitaOptions>>();
+                return new RestClient(capitaOptions.Value.ApiAddress);
+            });
+            services.AddTransient<ICapitaService, CapitaService>();
 
             services.AddHttpClient();
             // services.AddTransient<IAddressesGateway, AddressesDatabaseGateway>();
             // services.AddTransient<IAddressesGateway, DummyAddressesGateway>();
             services.AddTransient<IAddressesGateway, AddressesCosmosGateway>();
-            services.AddTransient<IWorkOrderGateway, DummyWorkOrderGateway>();
+            // services.AddTransient<IWorkOrderGateway, DummyWorkOrderGateway>();
+            services.AddTransient<IWorkOrderGateway, CapitaWorkOrderGateway>();
             services.AddTransient<ICreateWorkOrderUseCase, CreateWorkOrderUseCase>();
 
             // services.AddTransient<ICosmosAddressQueryHelper, CosmosAddressQueryHelper>();
