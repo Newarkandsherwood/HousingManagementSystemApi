@@ -114,14 +114,14 @@ jobs:
           echo "cosmos_endpoint_url                               = \"${{ secrets.COSMOS_ENDPOINT_URL }}\"" >> env.tfvars
           echo "cosmos_authorization_key                          = \"${{ secrets.COSMOS_AUTHORIZATION_KEY }}\"" >> env.tfvars
 
-          echo "capita_url_production                             = \"${{ secrets.CAPITA_URL_PRODUCTION }}\"" >> env.tfvars
-          echo "capita_url_staging                                = \"${{ secrets.CAPITA_URL_STAGING }}\"" >> env.tfvars
+          echo "capita_api_address_production                     = \"${{ secrets.CAPITA_URL_PRODUCTION }}\"" >> env.tfvars
+          echo "capita_api_address_staging                        = \"${{ secrets.CAPITA_URL_STAGING }}\"" >> env.tfvars
           echo "capita_username_production                        = \"${{ secrets.CAPITA_USERNAME_PRODUCTION }}\"" >> env.tfvars
           echo "capita_username_staging                           = \"${{ secrets.CAPITA_USERNAME_STAGING }}\"" >> env.tfvars
           echo "capita_password_production                        = \"${{ secrets.CAPITA_PASSWORD_PRODUCTION }}\"" >> env.tfvars
           echo "capita_password_staging                           = \"${{ secrets.CAPITA_PASSWORD_STAGING }}\"" >> env.tfvars
-          echo "capita_stdjobcode_production                      = \"${{ secrets.CAPITA_STDJOBCODE_PRODUCTION }}\"" >> env.tfvars
-          echo "capita_stdjobcode_staging                         = \"${{ secrets.CAPITA_STDJOBCODE_STAGING }}\"" >> env.tfvars
+          echo "capita_standardjobcode_production                 = \"${{ secrets.CAPITA_STDJOBCODE_PRODUCTION }}\"" >> env.tfvars
+          echo "capita_standardjobcode_staging                    = \"${{ secrets.CAPITA_STDJOBCODE_STAGING }}\"" >> env.tfvars
           echo "capita_source_production                          = \"${{ secrets.CAPITA_SOURCE_PRODUCTION }}\"" >> env.tfvars
           echo "capita_source_staging                             = \"${{ secrets.CAPITA_SOURCE_STAGING }}\"" >> env.tfvars
           echo "capita_sublocation_production                     = \"${{ secrets.CAPITA_SUBLOCATION_PRODUCTION }}\"" >> env.tfvars

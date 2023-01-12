@@ -91,12 +91,12 @@ variable "cosmos_authorization_key" {
   sensitive = true
 }
 
-variable "capita_url_staging" {
+variable "capita_api_address_staging" {
   type      = string
   sensitive = true
 }
 
-variable "capita_url_production" {
+variable "capita_api_address_production" {
   type      = string
   sensitive = true
 }
@@ -121,12 +121,12 @@ variable "capita_password_production" {
   sensitive = true
 }
 
-variable "capita_stdjobcode_staging" {
+variable "capita_standardjobcode_staging" {
   type      = string
   sensitive = true
 }
 
-variable "capita_stdjobcode_production" {
+variable "capita_standardjobcode_production" {
   type      = string
   sensitive = true
 }
