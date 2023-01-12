@@ -6,6 +6,7 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
     using Helpers;
     using Models.Capita;
     using Moq;
+    using Services;
     using Xunit;
 
     public class CapitaWorkOrderGatewayTests
@@ -14,14 +15,12 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
         private const string LocationId = "locationId";
         private const string SorCode = "SOR_CODE";
         private const string Description = "SOR_CODE";
-        private LogJobRequest logJobRequest;
-        private Mock<ICapitaGatewayHelper> capitaGatewayHelperMock;
+        private Mock<ICapitaService> capitaService;
 
         public CapitaWorkOrderGatewayTests()
         {
-            logJobRequest = new LogJobRequest();
-            capitaGatewayHelperMock = new Mock<ICapitaGatewayHelper>();
-            systemUnderTest = new CapitaWorkOrderGateway(capitaGatewayHelperMock.Object);
+            this.capitaService = new Mock<ICapitaService>();
+            systemUnderTest = new CapitaWorkOrderGateway(capitaService.Object);
         }
 
         [Theory]
@@ -85,19 +84,18 @@ namespace HousingManagementSystemApi.Tests.GatewaysTests
             { new ArgumentException(), " " },
         };
         [Fact]
-        public async void GivenValidParameters_WhenCreateWorkOrder_ThenCapitaGatewayHelperCreateLogJobRequestIsCalled()
+        public async void GivenValidParameters_WhenCreateWorkOrder_ThenCapitaServiceLogJobIsCalled()
         {
             // Arrange
-            capitaGatewayHelperMock.Setup(helper => helper.CreateLogJobRequest(It.IsAny<string>(), It.IsAny<string>(),
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
-                                                                It.IsAny<string>()))
-                .Returns(this.logJobRequest);
+            capitaService.Setup(service => service.LogJob(It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .ReturnsAsync("WorkOrderID");
 
             // Act
             await systemUnderTest.CreateWorkOrder(Description, LocationId, SorCode);
 
             // Assert
-            capitaGatewayHelperMock.VerifyAll();
+            capitaService.VerifyAll();
         }
     }
 }
