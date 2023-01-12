@@ -7,9 +7,11 @@ using Microsoft.OpenApi.Models;
 
 namespace HousingManagementSystemApi
 {
+    using System;
     using Gateways;
     using Helpers;
     using HousingRepairsOnline.Authentication.DependencyInjection;
+    using Services;
     using UseCases;
 
     public class Startup
@@ -34,6 +36,7 @@ namespace HousingManagementSystemApi
             // var connectionString = GetEnvironmentVariable("UNIVERSAL_HOUSING_CONNECTION_STRING");
             // services.AddTransient<IAddressesRepository, UniversalHousingAddressesRepository>(_ =>
             //     new UniversalHousingAddressesRepository(() => new SqlConnection(connectionString)));
+            ConfigureOptions(services);
 
             services.AddHttpClient();
             // services.AddTransient<IAddressesGateway, AddressesDatabaseGateway>();
@@ -53,6 +56,31 @@ namespace HousingManagementSystemApi
 
             services.AddHealthChecks();
             // .AddSqlServer(connectionString, name: "Universal Housing database");
+        }
+
+        private void ConfigureOptions(IServiceCollection services)
+        {
+            var drsOptionsConfiguration = Configuration.GetSection(nameof(CapitaOptions));
+
+            var requiredCapitaOptions = new[]
+            {
+                nameof(CapitaOptions.ApiAddress),
+                nameof(CapitaOptions.Username),
+                nameof(CapitaOptions.Password),
+                nameof(CapitaOptions.Source),
+                nameof(CapitaOptions.StandardJobCode),
+                nameof(CapitaOptions.Sublocation),
+            };
+
+            foreach (var requiredCapitaOption in requiredCapitaOptions)
+            {
+                if (string.IsNullOrEmpty(drsOptionsConfiguration[requiredCapitaOption]))
+                {
+                    throw new InvalidOperationException($"Incorrect configuration: {nameof(CapitaOptions)}.{requiredCapitaOption} is a required configuration.");
+                }
+            }
+
+            services.Configure<CapitaOptions>(drsOptionsConfiguration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
