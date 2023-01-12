@@ -76,10 +76,10 @@ resource "azurerm_key_vault_secret" "cosmos-leasehold-staging-container-id" {
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
-resource "azurerm_key_vault_secret" "capita-url-staging" {
-    name         = "capita-url-staging"
-    value        = var.capita_url_staging
-    key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
+resource "azurerm_key_vault_secret" "capita-api-address-staging" {
+  name         = "capita-api-address-staging"
+  value        = var.capita_api_address_staging
+  key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
 resource "azurerm_key_vault_secret" "capita-username-staging" {
@@ -94,9 +94,9 @@ resource "azurerm_key_vault_secret" "capita-password-staging" {
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
-resource "azurerm_key_vault_secret" "capita-stdjobcode-staging" {
-  name         = "capita-stdjobcode-staging"
-  value        = var.capita_stdjobcode_staging
+resource "azurerm_key_vault_secret" "capita-standardjobcode-staging" {
+  name         = "capita-standardjobcode-staging"
+  value        = var.capita_standardjobcode_staging
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
@@ -143,9 +143,9 @@ resource "azurerm_key_vault_secret" "cosmos-leasehold-production-container-id" {
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
-resource "azurerm_key_vault_secret" "capita-url-production" {
-  name         = "capita-url-production"
-  value        = var.capita_url_production
+resource "azurerm_key_vault_secret" "capita-api-address-production" {
+  name         = "capita-api-address-production"
+  value        = var.capita_api_address_production
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
@@ -161,9 +161,9 @@ resource "azurerm_key_vault_secret" "capita-password-production" {
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
-resource "azurerm_key_vault_secret" "capita-stdjobcode-production" {
-  name         = "capita-stdjobcode-production"
-  value        = var.capita_stdjobcode_production
+resource "azurerm_key_vault_secret" "capita-standardjobcode-production" {
+  name         = "capita-standardjobcode-production"
+  value        = var.capita_standardjobcode_production
   key_vault_id = azurerm_key_vault.hro-management-api-key-vault.id
 }
 
