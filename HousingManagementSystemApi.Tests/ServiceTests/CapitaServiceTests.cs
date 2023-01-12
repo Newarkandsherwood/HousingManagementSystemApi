@@ -6,7 +6,9 @@ using System.Net.Mime;
 using System.Text;
 using System.Xml.Serialization;
 using FluentAssertions;
+using Microsoft.Extensions.Options;
 using Models.Capita;
+using Moq;
 using RestSharp;
 using RichardSzalay.MockHttp;
 using Services;
@@ -21,15 +23,24 @@ public class CapitaServiceTests : IDisposable
     private const string SorCode = "SOR_CODE";
     private const string WorkOrderId = "WorkOrderID";
     private const string Description = "description";
+    private const string CaptiaUrl = "http://test.com";
 
     public CapitaServiceTests()
     {
+        var capitaOptionsMock = new Mock<IOptions<CapitaOptions>>();
+        capitaOptionsMock.Setup(x => x.Value)
+            .Returns(new CapitaOptions
+            {
+                ApiAddress = new Uri(CaptiaUrl),
+                Username = "username",
+                Password = "password",
+            });
         restClient = new RestClient(new RestClientOptions
         {
             ConfigureMessageHandler = _ => mockHttpMessageHandler,
-            BaseUrl = new Uri("http://test.com")
+            BaseUrl = new Uri(CaptiaUrl)
         });
-        systemUnderTest = new CapitaService(restClient);
+        systemUnderTest = new CapitaService(restClient, capitaOptionsMock.Object);
     }
 
     [Fact]
@@ -41,7 +52,7 @@ public class CapitaServiceTests : IDisposable
         var logJobResponse =
             new LogJobResponse { Jobs = new Jobs { Job_logged = new Job_logged { Job_no = WorkOrderId, Logged_info = "logged info" } } };
         var content = ToXml(logJobResponse);
-        mockHttpMessageHandler.When("*").Respond(MediaTypeNames.Application.Xml, content);
+        mockHttpMessageHandler.When($"{CaptiaUrl}/*").Respond(MediaTypeNames.Application.Xml, content);
 
         // Act
         var actual = await systemUnderTest.LogJob(Description, LocationId, SorCode);
@@ -56,7 +67,7 @@ public class CapitaServiceTests : IDisposable
 #pragma warning restore CA1707
     {
         // Arrange
-        mockHttpMessageHandler.When("*").Respond(() => throw new());
+        mockHttpMessageHandler.When($"{CaptiaUrl}/*").Respond(() => throw new());
 
         // Act
         var act = async () => await systemUnderTest.LogJob(Description, $"{LocationId}2", SorCode);
@@ -74,7 +85,7 @@ public class CapitaServiceTests : IDisposable
         var logJobResponse =
             new LogJobResponse { ErrorDetails = "An Error" };
         var content = ToXml(logJobResponse);
-        mockHttpMessageHandler.When("*").Respond(MediaTypeNames.Application.Xml, content);
+        mockHttpMessageHandler.When($"{CaptiaUrl}/*").Respond(MediaTypeNames.Application.Xml, content);
 
         // Act
         var act = async () => await systemUnderTest.LogJob(Description, $"{LocationId}2", SorCode);
@@ -92,7 +103,7 @@ public class CapitaServiceTests : IDisposable
         var logJobResponse =
             new LogJobResponse { Jobs = new Jobs { Job_logged = new Job_logged { Job_no = WorkOrderId, Logged_info = "logged info" } } };
         var content = ToXml(logJobResponse);
-        mockHttpMessageHandler.When("*")
+        mockHttpMessageHandler.When($"{CaptiaUrl}/*")
             .WithPartialContent("Header")
             .WithPartialContent("<Security username=")
             .WithPartialContent("password=")
