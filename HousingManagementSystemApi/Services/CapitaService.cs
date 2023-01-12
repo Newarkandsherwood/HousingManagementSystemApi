@@ -4,24 +4,21 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
+using Microsoft.Extensions.Options;
 using Models.Capita;
 using RestSharp;
 
 public class CapitaService : ICapitaService
 {
     private readonly RestClient restClient;
-    private string capitaUrlString;
-    private string username = "username";
-    private string password = "password";
-    private string std_job_code;
+    private IOptions<CapitaOptions> capitaOptions;
     private string client_ref;
-    private string source;
-    private string sublocation;
     private const string quantity = "1";
 
-    public CapitaService(RestClient restClient)
+    public CapitaService(RestClient restClient, IOptions<CapitaOptions> capitaOptions)
     {
         this.restClient = restClient;
+        this.capitaOptions = capitaOptions;
     }
 
     public async Task<string> LogJob(string description, string locationId, string sorCode)
@@ -32,12 +29,12 @@ public class CapitaService : ICapitaService
 
         var restRequest = new RestRequest { Method = Method.Post };
 
-        var logJobRequest = CreateLogJobRequest(locationId, std_job_code, client_ref,
-            source, sorCode, sublocation, quantity, description);
+        var logJobRequest = CreateLogJobRequest(locationId, capitaOptions.Value.StandardJobCode, client_ref,
+            capitaOptions.Value.Source, sorCode, capitaOptions.Value.Sublocation, quantity, description);
 
         var body = new Message
         {
-            Header = new Header { Security = new Security { Username = username, Password = password } },
+            Header = new Header { Security = new Security { Username = capitaOptions.Value.Username, Password = capitaOptions.Value.Password } },
             Body = new Body
             {
                 Request = logJobRequest,
