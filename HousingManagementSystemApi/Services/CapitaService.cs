@@ -70,7 +70,7 @@ public class CapitaService : ICapitaService
                 new() { Attribute = "std_job_code", AttributeValue = std_job_code },
                 new() { Attribute = "client_ref", AttributeValue = client_ref },
                 new() { Attribute = "source", AttributeValue = source },
-                new() { Attribute = "description", AttributeValue = description },
+                new() { Attribute = "long_description", AttributeValue = description },
             },
             Lines = new Lines
             {
